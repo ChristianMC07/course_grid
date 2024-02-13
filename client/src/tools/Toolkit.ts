@@ -1,17 +1,17 @@
 // randomly generates a number between the range of low and high
-function getRandom(low:number = 1, high:number = 10) {
-    let randomNumber:number;
+function getRandom(low: number = 1, high: number = 10) {
+    let randomNumber: number;
     // calculate random number
     randomNumber = Math.round(Math.random() * (high - low)) + low;
     // returning value
     return randomNumber;
 }
 
-function addKey(functionToCall:Function, myKeyCode:string = "Enter") {
+function addKey(functionToCall: Function, myKeyCode: string = "Enter") {
     // this example exposes issue with scoping and event handlers and how it is solved with arrow function
 
     // wire up event listener
-    document.addEventListener("keydown", (e:KeyboardEvent) => {
+    document.addEventListener("keydown", (e: KeyboardEvent) => {
         // is the key released the provided key? Check keyCode via Event object
         if (e.code === myKeyCode) {
             // pressing the enter key will force some browsers to refresh
@@ -26,18 +26,18 @@ function addKey(functionToCall:Function, myKeyCode:string = "Enter") {
 }
 
 // ------------------------------------ challenge solution
-async function getJSONData(retrieveScript:string, success?:Function, failure?:Function) {
+async function getJSONData(retrieveScript: string, success?: Function, failure?: Function) {
     if (success !== undefined && failure !== undefined) {
         fetch(retrieveScript)
-            .then((response:Response) => response.json())
-            .then((data:any) => success(data))
-            .catch((error:Error) => failure(error.message));
+            .then((response: Response) => response.json())
+            .then((data: any) => success(data))
+            .catch((error: Error) => failure(error.message));
     } else {
         try {
-            const response:Response = await fetch(retrieveScript);
-            const data:any = await response.json();
+            const response: Response = await fetch(retrieveScript);
+            const data: any = await response.json();
             return data;
-        } catch (error:any) {
+        } catch (error: any) {
             console.log(`>>> FETCH ERROR: ${error.message}`);
             return null;
         }
@@ -45,19 +45,27 @@ async function getJSONData(retrieveScript:string, success?:Function, failure?:Fu
 }
 // -------------------------------------------------------
 
-function sendJSONData(sendURL:string, sendJSON:any, success:Function, failure:Function, debug:boolean = false) {
-    fetch(sendURL, 
+function sendJSONData(sendURL: string, sendJSON: any, success: Function, failure: Function, debug: boolean = false) {
+    fetch(sendURL,
         {
-            method: "POST", 
-            headers: {"content-type":"application/json"},
+            method: "POST",
+            headers: { "content-type": "application/json" },
             body: JSON.stringify(sendJSON)
         })
-        .then((response:Response) => response.text())
-        .then((responseText:string) => success(responseText))
-        .catch((error:Error) => {
+        .then((response: Response) => response.text())
+        .then((responseText: string) => success(responseText))
+        .catch((error: Error) => {
             failure(error);
             if (debug) throw error;
         });
 }
 
-export {getRandom, addKey, getJSONData, sendJSONData};
+// ----------------------------------------------------------- 
+function capitalizeWords(sentence: string) {
+    return sentence
+        .split(" ")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(" ");
+}
+
+export { getRandom, addKey, getJSONData, sendJSONData, capitalizeWords };

@@ -15,10 +15,11 @@ const MONGO_DB_NAME: string = "dbGrids";
 const MONGO_COLLECTION_ACCOUNT: string = "accounts";
 
 
+let mongoClient: MongoClient = new MongoClient(MONGO_URL);
+
 
 export async function createNewUser(formState: { message: string | null }, formData: FormData) {
 
-    let mongoClient: MongoClient = new MongoClient(MONGO_URL);
 
     const password = sanitizeHtml(formData.get('password') as string);
     const lastName = sanitizeHtml(formData.get('lastName') as string);
@@ -82,7 +83,7 @@ export async function loginUser(formState: { emailMessage?: string, passMessage?
         let validPass: string = sanitizeHtml(password);
 
         //connect to the DB
-        let mongoClient: MongoClient = new MongoClient(MONGO_URL);
+
         //try block with functionality
 
         try {
@@ -105,12 +106,10 @@ export async function loginUser(formState: { emailMessage?: string, passMessage?
             //if password in DB matches provided password, then redirect to user's homepage
 
             if (account.password === validPass) {
-                redirect('/home');
+                redirect(`/home/${account._id}`);
             } else {
                 return { feedback: "Invalid user or password" }
             }
-
-
 
         } catch (error: any) {
             console.error();
@@ -119,6 +118,31 @@ export async function loginUser(formState: { emailMessage?: string, passMessage?
         } finally {
             await mongoClient.close();
         }
+
+    }
+
+}
+
+export async function getUserInfo(userID: string): Promise<Accounts> {
+
+    await new Promise((r) => setTimeout(r, 2000));
+
+    let account: Accounts;
+    console.log(userID);
+
+    try {
+        await mongoClient.connect();
+        const accountsCollection = mongoClient.db(MONGO_DB_NAME).collection<Accounts>(MONGO_COLLECTION_ACCOUNT);
+        account = await accountsCollection.findOne({ _id: userID }) as Accounts;
+
+        return account;
+
+    } catch {
+        console.error('An error ocurred', error);
+        throw new Error('Failed to fetch user info');
+
+    } finally {
+        await mongoClient.close();
 
     }
 
