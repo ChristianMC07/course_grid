@@ -125,6 +125,8 @@ export async function loginUser(formState: { emailMessage?: string, passMessage?
 
 export async function getUserInfo(userID: string): Promise<Accounts> {
 
+    await new Promise((r) => setTimeout(r, 2000));
+
     let account: Accounts;
     console.log(userID);
 
