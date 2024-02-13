@@ -1,5 +1,3 @@
-import { SpinnerCircular } from "spinners-react";
-
 export default function SpinnerLoading() {
     return (
         <div className="flex h-screen justify-center items-center">
