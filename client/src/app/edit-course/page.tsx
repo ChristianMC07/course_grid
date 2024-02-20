@@ -15,8 +15,7 @@ const EditCoursePage: React.FC = () => {
   useEffect(() => {
     if (id) {
       setLoading(true);
-      // This should be an actual API call to fetch the course data
-      // For demonstration, we're using a hardcoded course
+
       const fetchedCourse: Courses = {
         _id: id as string,
         name: 'Sample Course',
@@ -38,9 +37,9 @@ const EditCoursePage: React.FC = () => {
       imageUrl: course?.imageUrl,
     };
 
-    // Here you would call an API to update the course
+
     console.log('Updated course:', updatedCourse);
-    // After successful update, redirect to the workspace
+
     router.push('/workspace');
   };
 
