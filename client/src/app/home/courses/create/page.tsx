@@ -14,18 +14,18 @@ export default function Create() {
         <form className="space-y-4">
           <h1 className="text-xl font-bold">Create new course:</h1>
 
-          <input hidden name='userID' value={userId!} />
+          <input hidden type='text' name='userID' value={userId!} />
 
-          <label htmlFor="courseCode" className="block text-gray-700 text-sm font-bold mb-2">
+          <label htmlFor="courseID" className="block text-gray-700 text-sm font-bold mb-2">
             Course code
           </label>
 
           <input
             type="text"
-            id="courseCode"
+            id="courseID"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
-            name='courseCode'
+            name='courseID'
           />
 
           <label htmlFor="courseName" className="block text-gray-700 text-sm font-bold mb-2">
@@ -49,7 +49,7 @@ export default function Create() {
             name="courseDescription"
           />
 
-          <input type='file' name='imageUrl' />
+          <input type='file' name='coursePhoto' />
 
 
           <div className="flex items-center justify-between mt-6">
