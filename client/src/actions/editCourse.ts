@@ -1,5 +1,3 @@
-// actions/editCourse.ts
-
 /**
  * Sends a PUT request to the server to update a course.
  *
