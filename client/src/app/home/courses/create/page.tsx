@@ -1,23 +1,12 @@
-'use client';
-
-import React, { useState } from 'react';
 import Link from 'next/link';
+import { auth, currentUser } from '@clerk/nextjs';
+import { File } from 'buffer';
 
 
+export default function Create() {
 
-const CreateCoursePage: React.FC = () => {
-
-
-  const [courseCode, setCourseCode] = useState('');
-  const [courseName, setCourseName] = useState('');
-  const [courseDescription, setCourseDescription] = useState('');
-
-
-
-  // if (!isAuthenticated) {
-  //     // Handle as appropriate for your app
-  //     return <div>Please log in to create a course.</div>;
-  //   }
+  const { userId } = auth();
+  console.log(userId);
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
@@ -26,16 +15,18 @@ const CreateCoursePage: React.FC = () => {
         <form className="space-y-4">
           <h1 className="text-xl font-bold">Create new course:</h1>
 
+          <input hidden name='userID' value={userId!} />
+
           <label htmlFor="courseCode" className="block text-gray-700 text-sm font-bold mb-2">
             Course code
           </label>
+
           <input
             type="text"
             id="courseCode"
-            value={courseCode}
-            onChange={(e) => setCourseCode(e.target.value)}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
+            name='courseCode'
           />
 
           <label htmlFor="courseName" className="block text-gray-700 text-sm font-bold mb-2">
@@ -44,10 +35,9 @@ const CreateCoursePage: React.FC = () => {
           <input
             type="text"
             id="courseName"
-            value={courseName}
-            onChange={(e) => setCourseName(e.target.value)}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
+            name='courseName'
           />
 
           <label htmlFor="courseDescription" className="block text-gray-700 text-sm font-bold mb-2">
@@ -55,18 +45,13 @@ const CreateCoursePage: React.FC = () => {
           </label>
           <textarea
             id="courseDescription"
-            value={courseDescription}
-            onChange={(e) => setCourseDescription(e.target.value)}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
+            name="courseDescription"
           />
 
-          {/* Placeholder for image upload input */}
-          <div className="flex items-center justify-between">
-            <button type="button" className="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded">
-              Upload image
-            </button>
-          </div>
+          <input type='file' name='imageUrl' />
+
 
           <div className="flex items-center justify-between mt-6">
             <button type="submit" className="bg-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
@@ -80,6 +65,4 @@ const CreateCoursePage: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default CreateCoursePage;
+}
