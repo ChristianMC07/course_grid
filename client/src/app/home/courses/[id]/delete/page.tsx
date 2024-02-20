@@ -1,0 +1,1 @@
+// Same case for deleting a course

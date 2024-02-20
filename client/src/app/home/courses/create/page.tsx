@@ -6,25 +6,21 @@ import Link from 'next/link';
 
 
 const CreateCoursePage: React.FC = () => {
-    
-  
-    const [courseCode, setCourseCode] = useState('');
-    const [courseName, setCourseName] = useState('');
-    const [courseDescription, setCourseDescription] = useState('');
 
-  
-  
-// if (!isAuthenticated) {
-//     // Handle as appropriate for your app
-//     return <div>Please log in to create a course.</div>;
-//   }
+
+  const [courseCode, setCourseCode] = useState('');
+  const [courseName, setCourseName] = useState('');
+  const [courseDescription, setCourseDescription] = useState('');
+
+
+
+  // if (!isAuthenticated) {
+  //     // Handle as appropriate for your app
+  //     return <div>Please log in to create a course.</div>;
+  //   }
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
-      <nav className="flex justify-between items-center mb-6">
-        <Link href="/home" className="text-2xl font-bold">Logo</Link>
-        <Link href="/" className="text-sm font-semibold text-gray-700 hover:text-gray-900">Log Out</Link>
-      </nav>
 
       <div className="max-w-lg mx-auto bg-white p-6 rounded shadow">
         <form className="space-y-4">
@@ -76,8 +72,8 @@ const CreateCoursePage: React.FC = () => {
             <button type="submit" className="bg-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               Create
             </button>
-            <Link href="/workspace" className="font-bold text-sm text-blue-500 hover:text-blue-800">
-                Cancel
+            <Link href="/courses" className="font-bold text-sm text-blue-500 hover:text-blue-800">
+              Cancel
             </Link>
           </div>
         </form>
