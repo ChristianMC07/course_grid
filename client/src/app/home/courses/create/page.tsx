@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { auth, currentUser } from '@clerk/nextjs';
-import { File } from 'buffer';
 
 
 export default function Create() {
