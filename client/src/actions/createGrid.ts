@@ -14,3 +14,4 @@ type ErrorMessage = {
     [key: string]: any;
 }
 
+let mongoClient: MongoClient = new MongoClient(MONGO_URL);
