@@ -10,6 +10,10 @@ interface createGridPageProps {
     }
 }
 
+type ErrorMessage = {
+    [key: string]: any;
+}
+
 export default function CreateGrid(props: createGridPageProps) {
     return (
         <div className="min-h-[85vh] bg-gray-100 pl-10 pt-10">
