@@ -64,7 +64,7 @@ export default function Create() {
 
           <input type='file' name='coursePhoto' />
 
-          {formState?.coursePhotoError ? <span className='text-red-500'>{formState.coursePhotoError} </span> : ''}
+          {formState?.coursePhotoError ? <p className='text-red-500'>{formState.coursePhotoError} </p> : ''}
 
 
           <div className="flex items-center justify-between mt-6">

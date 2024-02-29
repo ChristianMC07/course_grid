@@ -24,8 +24,8 @@ export default async function Courses() {
           + Add Course
         </Link>
 
-        {(typeof (userInfo) !== undefined) && (typeof (userInfo) !== null)
-          ? userInfo!.courses!.map((course, index) => (
+        {(typeof (userInfo) !== undefined) && (typeof (userInfo) !== null) && (userInfo?.courses != null)
+          ? userInfo.courses.map((course, index) => (
             <div key={index} className="mt-10 max-w-sm mx-auto bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden">
               <div className="p-5">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{course.courseName}</h5>

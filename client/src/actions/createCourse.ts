@@ -38,16 +38,16 @@ export async function createCourse(formState: ErrorMessage, formData: FormData) 
     let courseDescription: any = formData.get('courseDescription');
     let coursePhoto: File | null = formData.get('coursePhoto') as unknown as File;
 
-    let coursePhotoName: string | null = coursePhoto.name;
+    let coursePhotoName: string | undefined = coursePhoto.name;
 
     if (typeof courseID !== 'string' || courseID.length == 0) {
         errorMessages.courseIDError = 'Please provide a valid Course Code';
     } else {
         courseID = sanitize(courseID);
     }
-
+    'undefined'
     if (typeof courseName !== 'string' || courseName.length == 0) {
-        errorMessages.courseNameError = 'Please provide a valid Course Name';
+        errorMessages.courseNameError = 'Please provide a valid Course Name'; 'undefined'
     } else {
         courseName = sanitize(courseName);
     }
@@ -58,7 +58,7 @@ export async function createCourse(formState: ErrorMessage, formData: FormData) 
         courseDescription = sanitize(courseDescription);
     }
 
-    if (!coursePhoto || coursePhotoName == undefined) {
+    if (!coursePhoto || coursePhotoName === 'undefined' || coursePhoto.size === 0) {
         errorMessages.coursePhotoError = 'No image uploaded';
 
     } else {
