@@ -2,15 +2,10 @@ import React from 'react';
 import Link from 'next/link';
 import { thisUserCourses } from '@/actions/thisUserCourses';
 import Image from 'next/image';
-import { promises as fs } from 'fs';
-import { join } from "path";
 
 export default async function Courses() {
 
   const userInfo = await thisUserCourses()
-
-  const projectRoot = process.cwd();
-  const imagesDir = join(projectRoot, 'public', 'images');
 
   return (
     <div className="min-h-screen bg-gray-100">
