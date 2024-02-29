@@ -21,4 +21,9 @@ export async function createGrid(formState: ErrorMessage, formData: FormData) {
     let { userId } = auth();
     console.log(userId);
 
+    let errorMessages: ErrorMessage = {
+        gridNameError: '',
+        weeksError: '',
+    }
+
 }
