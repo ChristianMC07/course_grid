@@ -44,7 +44,7 @@ export default async function Courses() {
               <div className='flex justify-around align-middle'>
                 <Link href={`/home/courses/${course.courseID}/edit`} className="bg-blue-500 text-white px-4 py-2 rounded my-4 hover:bg-blue-700 focus:outline-none active:bg-blue-900">Edit</Link>
                 <Link href={`/home/courses/${course.courseID}/delete`} className="bg-red-500 text-white px-4 py-2 rounded  my-4 hover:bg-red-700 focus:outline-none active:bg-red-900">Delete</Link>
-                <Link href={`/home/course/${course.courseID}/grids`} className="bg-green-500 text-white px-4 py-2 rounded  my-4 hover:bg-green-700 focus:outline-none active:bg-green-900">Grids</Link>
+                <Link href={`/home/courses/${course.courseID}/grids`} className="bg-green-500 text-white px-4 py-2 rounded  my-4 hover:bg-green-700 focus:outline-none active:bg-green-900">Grids</Link>
               </div>
 
 
