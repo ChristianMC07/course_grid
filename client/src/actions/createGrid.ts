@@ -15,3 +15,7 @@ type ErrorMessage = {
 }
 
 let mongoClient: MongoClient = new MongoClient(MONGO_URL);
+
+export async function createGrid(formState: ErrorMessage, formData: FormData) {
+
+}
