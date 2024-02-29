@@ -1,4 +1,8 @@
+'use client';
+
 import Link from 'next/link';
+import { useFormState } from 'react-dom';
+import { createGrid } from '@/actions/createGrid';
 
 interface createGridPageProps {
     params: {
