@@ -1,3 +1,7 @@
+import { join } from "path";
+import sanitize from "sanitize-html";
+import { promises as fs } from 'fs';
+
 // randomly generates a number between the range of low and high
 function getRandom(low: number = 1, high: number = 10) {
     let randomNumber: number;
@@ -68,4 +72,23 @@ function capitalizeWords(sentence: string) {
         .join(" ");
 }
 
-export { getRandom, addKey, getJSONData, sendJSONData, capitalizeWords };
+// -----------------------------------------------------------
+
+async function createImage(image: File) {
+    const projectRoot = process.cwd();
+    const imagesDir = join(projectRoot, 'public', 'images');
+
+    let sanitizedCoursePhotoName = sanitize(image.name);
+    // const filePath = join(imagesDir, sanitizedCoursePhotoName + "_" + Date.now());
+    const filePath = join(imagesDir, sanitizedCoursePhotoName);
+
+    const bytes = await image.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    await fs.mkdir(imagesDir, { recursive: true });
+
+    await fs.writeFile(filePath, buffer);
+
+}
+
+export { getRandom, addKey, getJSONData, sendJSONData, capitalizeWords, createImage };
