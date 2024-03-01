@@ -10,17 +10,22 @@ interface createGridPageProps {
     }
 }
 
-type ErrorMessage = {
-    [key: string]: any;
-}
-
 export default function CreateGrid(props: createGridPageProps) {
+
+    type ErrorMessage = {
+        [key: string]: any;
+    }
+
+    const formData = new FormData();
+
+    const [formState, action] = useFormState<ErrorMessage, FormData>(createGrid, formData);
     return (
         <div className="min-h-[85vh] bg-gray-100 pl-10 pt-10">
 
             <div className="max-w-lg mx-auto bg-white p-6 rounded shadow">
-                <form className="space-y-4" noValidate>
+                <form className="space-y-4" noValidate action={action}>
                     <h1 className="text-xl font-bold" >Create grid for {props.params.id}</h1>
+                    <input type='hidden' value={props.params.id} name='courseID' />
                     <label htmlFor="gridName" className="block text-gray-700 text-sm font-bold mb-2">
                         Grid name
                     </label>
@@ -52,11 +57,8 @@ export default function CreateGrid(props: createGridPageProps) {
                         </Link>
                     </div>
                 </form>
-
             </div>
-
         </div>
     )
-
 
 }
