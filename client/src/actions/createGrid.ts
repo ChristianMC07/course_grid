@@ -16,7 +16,7 @@ type ErrorMessage = {
 
 let mongoClient: MongoClient = new MongoClient(MONGO_URL);
 
-export async function createGrid(formState: ErrorMessage, formData: FormData, id: string) {
+export async function createGrid(formState: ErrorMessage, formData: FormData) {
 
     let { userId } = auth();
     console.log(userId);
@@ -29,5 +29,5 @@ export async function createGrid(formState: ErrorMessage, formData: FormData, id
     let _id: string = userId!;
     let gridName: any = formData.get('gridName');
     let weeks: any = formData.get('weeks');
-
+    let courseID: string = formData.get('courseID') as string;
 }
