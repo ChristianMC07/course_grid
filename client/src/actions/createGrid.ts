@@ -62,8 +62,14 @@ export async function createGrid(formState: ErrorMessage, formData: FormData) {
 
             let weekObjects = Array.from({ length: weeks }, (_, i) => ({
                 weekName: `Week ${i + 1}`,
-                rows: []
+                rows: [],
             }))
+
+            //Construct the new grid with weeks
+            let newGrid = {
+                gridName: gridName,
+                weeks: weekObjects,
+            }
 
             const doc = await accountsCollection.findOne({ _id: _id });
 
