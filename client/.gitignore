@@ -19,7 +19,8 @@
 # misc
 .DS_Store
 *.pem
-/public/images/
+/client/public/images/
+/public/images
 
 # debug
 npm-debug.log*
