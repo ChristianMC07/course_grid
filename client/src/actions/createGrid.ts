@@ -71,11 +71,17 @@ export async function createGrid(formState: ErrorMessage, formData: FormData) {
 
             const updateResult: UpdateResult = await accountsCollection.updateOne({ _id: _id, "courses.courseID": courseID }, { $push: { "courses.$.grids": newGrid } });
 
-        } catch {
+            updateResult.modifiedCount === 1 ? console.log("The grid was added") : console.log('No luck');
+
+        } catch (error) {
+            console.log('This is the error and will appear in the server : ' + error)
 
         } finally {
 
+            mongoClient.close();
         }
+
+        redirect(`/home/courses/${courseID}/grids`)
     } else {
         return errorMessages;
     }
