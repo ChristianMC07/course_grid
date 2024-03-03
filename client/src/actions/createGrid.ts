@@ -47,7 +47,7 @@ export async function createGrid(formState: ErrorMessage, formData: FormData) {
     } else if (parseInt(weeks) > 16) {
         errorMessages.weeksError = `Weeks can't be higher than 16`
     } else {
-        weeks = sanitize(weeks);
+        weeks = parseInt(sanitize(weeks));
     }
 
     console.log(errorMessages);
@@ -57,6 +57,13 @@ export async function createGrid(formState: ErrorMessage, formData: FormData) {
             await mongoClient.connect();
 
             const accountsCollection = mongoClient.db(MONGO_DB_NAME).collection<User>(MONGO_COLLECTION_ACCOUNT);
+
+            //Convert weeks into an array of Week objects with a wekName and empty Rows:
+
+            let weekObjects = Array.from({ length: weeks }, (_, i) => ({
+                weekName: `Week ${i + 1}`,
+                rows: []
+            }))
 
             const doc = await accountsCollection.findOne({ _id: _id });
 
