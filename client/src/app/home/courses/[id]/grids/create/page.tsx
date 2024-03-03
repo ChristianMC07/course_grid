@@ -36,6 +36,10 @@ export default function CreateGrid(props: createGridPageProps) {
                         required
                         name='gridName'
                     />
+                    {formState?.gridNameError ? <span className='text-red-500'>{formState.gridNameError}</span> : ''}
+
+
+
                     <label htmlFor="weeks" className="block text-gray-700 text-sm font-bold mb-2">
                         Number of weeks
                     </label>
@@ -47,6 +51,8 @@ export default function CreateGrid(props: createGridPageProps) {
                         required
                         name='weeks'
                     />
+
+                    {formState?.weeksError ? <span className='text-red-500'>{formState.weeksError}</span> : ''}
 
                     <div className="flex items-center justify-between mt-6">
                         <button type="submit" className="bg-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
