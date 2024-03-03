@@ -1,12 +1,10 @@
 'use server'
 
-import { User } from "@/tools/data.model";
-import { MongoClient } from "mongodb";
+import { User, Grid } from "@/tools/data.model";
+import { MongoClient, UpdateResult } from "mongodb";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import sanitize from "sanitize-html";
-import { error } from "console";
-import { createSearchParamsBailoutProxy } from "next/dist/client/components/searchparams-bailout-proxy";
 
 const MONGO_URL: string = "mongodb://mongo:27017/";
 const MONGO_DB_NAME: string = "dbGrids";
@@ -66,14 +64,12 @@ export async function createGrid(formState: ErrorMessage, formData: FormData) {
             }))
 
             //Construct the new grid with weeks
-            let newGrid = {
+            let newGrid: Grid = {
                 gridName: gridName,
                 weeks: weekObjects,
             }
 
-            const doc = await accountsCollection.findOne({ _id: _id });
-
-            console.log(doc);
+            const updateResult: UpdateResult = await accountsCollection.updateOne({ _id: _id, "courses.courseID": courseID }, { $push: { "courses.$.grids": newGrid } });
 
         } catch {
 
