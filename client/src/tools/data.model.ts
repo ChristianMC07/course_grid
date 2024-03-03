@@ -22,7 +22,12 @@ export interface Course {
 
 export interface Grid {
     gridName: string;
-    weeks?: Row[];
+    weeks?: Week[];
+}
+
+export interface Week {
+    weekName: string;
+    rows: Row[];
 }
 
 export interface Row {
