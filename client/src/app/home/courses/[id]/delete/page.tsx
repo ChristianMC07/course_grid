@@ -1,26 +1,17 @@
 'use client';
 
-import { useRouter } from 'next/router';
+import React from 'react';
 import Link from 'next/link';
+import { deleteCourse } from '@/actions/deleteCourse';
 
-export default function DeleteCourse() {
-  const router = useRouter();
-  const { id } = router.query;
+type DeleteProps = {
+  courseId: string; // Add this prop type
+};
 
+export default function Delete({ courseId }: DeleteProps) {
   const handleDelete = async () => {
-    // Assuming you have an API endpoint to handle deletion
-    const response = await fetch(`/api/courses/delete`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ courseId: id }),
-    });
-
-    if (response.ok) {
-      router.push('/courses'); // Redirect to courses list after deletion
-    } else {
-      alert('Failed to delete the course.');
+    if (courseId) {
+      const result = await deleteCourse(courseId);
     }
   };
 
@@ -28,17 +19,12 @@ export default function DeleteCourse() {
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-lg mx-auto bg-white p-6 rounded shadow">
         <h1 className="text-xl font-bold mb-4">Are you sure you want to delete this course?</h1>
-        <div className="flex justify-between">
-          <button
-            onClick={handleDelete}
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          >
+        <div className="flex items-center justify-between">
+          <button onClick={handleDelete} className="bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Delete
           </button>
-          <Link href="/courses">
-            <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
-              Cancel
-            </a>
+          <Link href="/home/courses" className="font-bold text-sm text-blue-500 hover:text-blue-800">
+            Cancel
           </Link>
         </div>
       </div>

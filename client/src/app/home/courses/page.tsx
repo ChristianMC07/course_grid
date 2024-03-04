@@ -12,7 +12,7 @@ export default async function Courses() {
   const projectRoot = process.cwd();
   const imagesDir = join(projectRoot, 'public', 'images');
 
-  console.log(userInfo);
+  console.log(userInfo?._id);
 
   return (
     <div className="min-h-screen bg-gray-100">
