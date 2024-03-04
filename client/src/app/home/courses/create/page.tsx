@@ -71,7 +71,7 @@ export default function Create() {
             <button type="submit" className="bg-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               Create
             </button>
-            <Link href="/courses" className="font-bold text-sm text-blue-500 hover:text-blue-800">
+            <Link href="/home/courses" className="font-bold text-sm text-blue-500 hover:text-blue-800">
               Cancel
             </Link>
           </div>

@@ -31,7 +31,6 @@ export async function editCourse(courseID: string, formData: FormData) {
                 $set: {
                     "courses.$.courseName": courseName,
                     "courses.$.courseDescription": courseDescription,
-                    "courses.$.coursePhoto": coursePhoto
                 }
             }
         );
