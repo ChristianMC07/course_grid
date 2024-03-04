@@ -17,4 +17,24 @@ export interface Course {
     courseName: string
     courseDescription: string;
     coursePhoto: string;
+    grids?: Grid[];
+}
+
+export interface Grid {
+    gridName: string;
+    weeks?: Week[];
+}
+
+export interface Week {
+    weekName: string;
+    rows: Row[];
+}
+
+export interface Row {
+    classID: string;
+    learningOut: string;
+    enablingOut: string;
+    material: string;
+    assesment: string;
+    notes: string;
 }

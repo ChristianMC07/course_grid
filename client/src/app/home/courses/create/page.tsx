@@ -15,11 +15,9 @@ export default function Create() {
 
   const [formState, action] = useFormState<ErrorMessage, FormData>(createCourse, new FormData());
 
-  console.log(formState);
-
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-[85vh] bg-gray-100 p-8">
 
       <div className="max-w-lg mx-auto bg-white p-6 rounded shadow">
         <form className="space-y-4" action={action} noValidate encType="multipart/form-data">
