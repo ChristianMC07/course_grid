@@ -38,10 +38,12 @@ export async function thisCourseGrids(courseID: string): Promise<Grid[] | undefi
             return [];
         }
 
-    } catch {
-
+    } catch (error) {
+        console.error("Error fetching course grids", error)
+        throw error;
     }
     finally {
+        await mongoClient.close();
 
     }
 
