@@ -8,20 +8,15 @@ const MONGO_COLLECTION_ACCOUNT = "accounts";
 
 let mongoClient = new MongoClient(MONGO_URL);
 
-export async function editCourse(courseID: string, formData: FormData) {
+export async function editCourse(courseID: string, courseData: any) {
     // Connect to the database
     await mongoClient.connect();
     const db = mongoClient.db(MONGO_DB_NAME);
     const collection = db.collection(MONGO_COLLECTION_ACCOUNT);
 
-    // Extract data from formData
-    const courseName = formData.get('courseName') as string;
-    const courseDescription = formData.get('courseDescription') as string;
-    const coursePhoto = formData.get('coursePhoto') as File;
-
-    // Sanitize input
-    const sanitizedCourseName = sanitize(courseName);
-    const sanitizedCourseDescription = sanitize(courseDescription);
+    // Extract and sanitize data
+    const sanitizedCourseName = sanitize(courseData.courseName);
+    const sanitizedCourseDescription = sanitize(courseData.courseDescription);
     // Handle coursePhoto as needed
 
     // Update the course in the database
@@ -41,11 +36,19 @@ export async function editCourse(courseID: string, formData: FormData) {
             throw new Error('Course not updated');
         }
 
-        // Redirect or return success response
-        redirect('/home/courses');
-    } catch (error) {
-        console.error('Error updating course:', error);
-        // Handle error
+        // Return success response (handle redirection in client-side)
+        return { success: true };
+    } catch (error: unknown) {
+        // Check if error is an instance of Error
+        if (error instanceof Error) {
+            console.error('Error updating course:', error.message);
+            // Return error response with the message property
+            return { success: false, error: error.message };
+        } else {
+            console.error('An unexpected error occurred');
+            // Return a generic error response
+            return { success: false, error: 'An unexpected error occurred' };
+        }
     } finally {
         await mongoClient.close();
     }

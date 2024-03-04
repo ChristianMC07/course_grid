@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { fetchCourse } from '@/actions/fetchCourse';
 import { Course } from '@/tools/data.model';
+import { editCourse } from '@/actions/editCourse';
 
 const EditCoursePage = () => {
     const router = useRouter();
@@ -12,58 +13,32 @@ const EditCoursePage = () => {
     const [course, setCourse] = useState<Course | null>(null);
     const [loading, setLoading] = useState(false);
 
-    // Fetch the course on component mount
     useEffect(() => {
         if (typeof courseID === 'string') {
             setLoading(true);
-            fetchCourse(courseID).then(fetchedCourse => {
-                setCourse(fetchedCourse);
-                setLoading(false);
-            }).catch(error => {
-                console.error('Error fetching course:', error);
+            fetchCourse(courseID).then(data => {
+                setCourse(data);
                 setLoading(false);
             });
         }
     }, [courseID]);
 
-    // Handle form submission
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (!courseID || !course) {
-            console.error("Invalid course data");
-            return;
-        }
 
+        // Ensure 'formData' is correctly defined here
         const formData = new FormData(event.currentTarget);
+
+        if (!courseID || !course) return;
+
         setLoading(true);
-
-        try {
-            const response = await fetch('/api/courses/edit', {
-                method: 'POST',
-                body: JSON.stringify({
-                    courseID,
-                    ...Object.fromEntries(formData)
-                }),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            if (!response.ok) {
-                throw new Error(`Error: ${response.statusText}`);
-            }
-
-            await response.json();
-            router.push('/home/courses');
-        } catch (error) {
-            console.error('Error updating course:', error);
-        } finally {
-            setLoading(false);
-        }
+        await editCourse(course.courseID, formData);
+        setLoading(false);
+        router.push('/home/courses');
     };
 
     if (loading) return <p>Loading...</p>;
-
+    
     return (
         <div className="container">
             <h1>Edit Course</h1>
