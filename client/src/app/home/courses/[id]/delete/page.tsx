@@ -5,10 +5,12 @@ import Link from 'next/link';
 import { fetchCourse } from '@/actions/fetchCourse';
 import { deleteCourse } from '@/actions/deleteCourse';
 import { Course } from '@/tools/data.model';
+import SpinnerLoading from "@/app/loading";
 
 const Delete = () => {
   const [courseData, setCourseData] = useState<Course | null>(null);
   const [courseId, setCourseId] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     // Extract the course ID from the URL
@@ -20,6 +22,7 @@ const Delete = () => {
       const course = await fetchCourse(id);
       if (course) {
         setCourseData(course);
+        setIsLoading(false);
       }
     };
 
@@ -42,7 +45,7 @@ const Delete = () => {
   };
 
   if (!courseData) {
-    return <div>Loading...</div>;
+    return <SpinnerLoading />;
   }
 
   return (

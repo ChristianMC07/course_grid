@@ -5,12 +5,14 @@ import Link from 'next/link';
 import { fetchCourse } from '@/actions/fetchCourse';
 import { Course } from '@/tools/data.model';
 import { editCourse } from '@/actions/editCourse';
+import SpinnerLoading from "@/app/loading";
 
 const EditCoursePage = () => {
   const [courseData, setCourseData] = useState<Course | null>(null);
   const [courseId, setCourseId] = useState<string>('');
   const [courseName, setCourseName] = useState<string>('');
   const [courseDescription, setCourseDescription] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const urlParts = window.location.pathname.split('/');
@@ -23,6 +25,7 @@ const EditCoursePage = () => {
         setCourseData(course);
         setCourseName(course.courseName);
         setCourseDescription(course.courseDescription);
+        setIsLoading(false);
       }
     };
 
@@ -47,7 +50,7 @@ const EditCoursePage = () => {
   };
 
   if (!courseData) {
-    return <div>Loading...</div>;
+    return <SpinnerLoading />;
   }
 
   return (
