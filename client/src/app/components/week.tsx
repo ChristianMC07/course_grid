@@ -9,7 +9,7 @@ interface WeekProps {
 
 export default function WeekComp({ gridInfo }: WeekProps) {
 
-
+    const [visibleWeeks, setVisibleWeeks] = useState<{ [key: string]: boolean }>({});
 
     const toggleDropdown = () => {
         console.log('Icon clicked');
