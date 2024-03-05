@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { Grid, Week } from "@/tools/data.model";
 import React, { useState } from 'react';
+import { useFormState } from 'react-dom';
 
 interface WeekProps {
     gridInfo: Grid;
@@ -69,7 +70,7 @@ export default function WeekComp({ gridInfo }: WeekProps) {
                                                 </div>
                                                 {/* Additional row cells */}
                                             </div>
-                                            <div className="flex py-6 gap-x-4 items-center">
+                                            <form className="flex py-6 gap-x-4 items-center">
                                                 <input className="w-28 h-10 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline"></input>
                                                 <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white"></textarea>
                                                 <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white"></textarea>
@@ -77,7 +78,7 @@ export default function WeekComp({ gridInfo }: WeekProps) {
                                                 <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white"></textarea>
                                                 <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white"></textarea>
                                                 <Image src={`/images/icons/plus.png`} width={30} height={30} alt="Plus button to add new row"></Image>
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
