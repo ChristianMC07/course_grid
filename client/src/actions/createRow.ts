@@ -33,7 +33,7 @@ export async function createRow(formState: ErrorMessage, formData: FormData) {
     let gridName: string = formData.get('gridName') as string;
     let weekName: string = formData.get('weekName') as string;
 
-    let courseIndex = findCourseIndex(_id, courseID);
+    let indexes = await findIndexes(_id, courseID, gridName);
 
 
     let classID: any = formData.get('classID');
@@ -120,23 +120,28 @@ export async function createRow(formState: ErrorMessage, formData: FormData) {
 
 }
 
-async function findCourseIndex(userId: string, courseID: string) {
+async function findIndexes(userId: string, courseID: string, gridName: string) {
 
     try {
 
         await mongoClient.connect();
 
+        let courseIndex = -1;
 
+        let gridIndex = -1;
         const accountsCollection = mongoClient.db(MONGO_DB_NAME).collection<User>(MONGO_COLLECTION_ACCOUNT);
 
         const userDocument = await accountsCollection.findOne({ _id: userId })
 
-        let courseIndex = -1;
         if (userDocument && userDocument.courses) {
             courseIndex = userDocument.courses.findIndex(course => course.courseID === courseID);
+
+            if (userDocument.courses[courseIndex].grids) {
+                gridIndex = userDocument!.courses![courseIndex].grids!.findIndex(grid => grid.gridName === gridName);
+            }
         }
 
-        return courseIndex;
+        return { courseIndex, gridIndex };
 
     } finally {
 
