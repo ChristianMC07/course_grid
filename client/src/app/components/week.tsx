@@ -1,12 +1,22 @@
 'use client';
 import Image from "next/image";
 import { Grid, Week } from "@/tools/data.model";
+import React, { useState } from 'react';
 
 interface WeekProps {
     gridInfo: Grid;
 };
 
 export default function WeekComp({ gridInfo }: WeekProps) {
+
+
+
+    const toggleDropdown = () => {
+        console.log('Icon clicked');
+    };
+
+
+
     return (
         <section>
             {gridInfo.weeks && gridInfo.weeks.length > 0 ? (
@@ -16,7 +26,7 @@ export default function WeekComp({ gridInfo }: WeekProps) {
                             <h2 className="text-2xl font-black">{week.weekName}</h2>
                             <div className="flex gap-4">
                                 <Image width={30} height={30} alt="Red trash bin to delete week" src='/images/icons/delete-128.png' />
-                                <Image width={40} height={40} alt="Show more button" src='/images/icons/chevron.png' />
+                                <Image width={40} height={40} alt="Show more button" src='/images/icons/chevron.png' onClick={toggleDropdown} />
                             </div>
                         </div>
                         {/* Adjustments for horizontal scrolling */}
