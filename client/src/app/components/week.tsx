@@ -78,10 +78,10 @@ export default function WeekComp({ gridInfo, courseID }: WeekProps) {
                                                 </div>
                                                 {/* Additional row cells */}
                                             </div>
-                                            <form className="flex py-6 gap-x-4 items-center">
+                                            <form className="flex py-6 gap-x-4 items-center" action={action}>
+                                                <input type="hidden" name="courseID" value={courseID} />
                                                 <input type="hidden" name="gridName" value={gridInfo.gridName} />
                                                 <input type="hidden" name="weekName" value={gridInfo.weeks![index].weekName} />
-                                                <input type="hidden" name="weekName" value={courseID} />
 
                                                 <input className="w-28 h-10 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline" name="classID"></input>
                                                 <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="learningOutcome"></textarea>
@@ -89,7 +89,7 @@ export default function WeekComp({ gridInfo, courseID }: WeekProps) {
                                                 <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="material"></textarea>
                                                 <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="assessment"></textarea>
                                                 <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="notes"></textarea>
-                                                <Image src={`/images/icons/plus.png`} width={30} height={30} alt="Plus button to add new row"></Image>
+                                                <button><Image src={`/images/icons/plus.png`} width={30} height={30} alt="Plus button to add new row"></Image></button>
                                             </form>
                                         </div>
                                     </div>
