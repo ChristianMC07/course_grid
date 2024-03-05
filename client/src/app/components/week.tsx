@@ -3,18 +3,26 @@ import Image from "next/image";
 import { Grid, Week } from "@/tools/data.model";
 import React, { useState } from 'react';
 import { useFormState } from 'react-dom';
+import { createRow } from "@/actions/createRow";
 
 interface WeekProps {
     gridInfo: Grid;
+    courseID: string;
 };
 
-export default function WeekComp({ gridInfo }: WeekProps) {
+export default function WeekComp({ gridInfo, courseID }: WeekProps) {
+
+    type ErrorMessage = {
+        [key: string]: any;
+    };
 
     const [visibleWeeks, setVisibleWeeks] = useState<{ [key: string]: boolean }>({});
 
     const toggleDropdown = (index: number) => {
         setVisibleWeeks(prev => ({ ...prev, [index]: !prev[index] }));
     };
+
+    const [formState, action] = useFormState<ErrorMessage, FormData>(createRow, new FormData());
 
 
 
@@ -71,12 +79,16 @@ export default function WeekComp({ gridInfo }: WeekProps) {
                                                 {/* Additional row cells */}
                                             </div>
                                             <form className="flex py-6 gap-x-4 items-center">
-                                                <input className="w-28 h-10 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline"></input>
-                                                <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white"></textarea>
-                                                <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white"></textarea>
-                                                <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white"></textarea>
-                                                <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white"></textarea>
-                                                <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white"></textarea>
+                                                <input type="text" name="gridName" value={gridInfo.gridName} />
+                                                <input type="text" name="weekName" value={gridInfo.weeks![index].weekName} />
+                                                <input type="text" name="weekName" value={courseID} />
+
+                                                <input className="w-28 h-10 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline" name="classID"></input>
+                                                <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="learningOutcome"></textarea>
+                                                <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="enablingOutcome"></textarea>
+                                                <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="material"></textarea>
+                                                <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="assessment"></textarea>
+                                                <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="notes"></textarea>
                                                 <Image src={`/images/icons/plus.png`} width={30} height={30} alt="Plus button to add new row"></Image>
                                             </form>
                                         </div>
