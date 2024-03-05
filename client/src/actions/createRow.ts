@@ -33,7 +33,7 @@ export async function createRow(formState: ErrorMessage, formData: FormData) {
     let gridName: string = formData.get('gridName') as string;
     let weekName: string = formData.get('weekName') as string;
 
-    let indexes = await findIndexes(_id, courseID, gridName);
+    let indexes = await findIndexes(_id, courseID, gridName, weekName);
 
 
     let classID: any = formData.get('classID');
@@ -95,9 +95,11 @@ export async function createRow(formState: ErrorMessage, formData: FormData) {
                 notes: formData.get('notes'),
             };
 
+            const updatePath = `courses.${indexes.courseIndex}.grids.${indexes.gridIndex}.weeks.${indexes.weekIndex}.rows`;
+
             const updateResult: UpdateResult = await accountsCollection.updateOne(
-                { _id: _id, "courses.courseID": courseID, "courses.grids.gridName": gridName, "courses.grids.weeks.weekName": weekName },
-                { $push: { "courses.$.grids.$.weeks.$.rows": newRow } }
+                { _id: _id, },
+                { $push: { [updatePath]: newRow } }
             );
 
             updateResult.modifiedCount === 1 ? console.log("The row was added") : console.log('No luck');
@@ -120,7 +122,7 @@ export async function createRow(formState: ErrorMessage, formData: FormData) {
 
 }
 
-async function findIndexes(userId: string, courseID: string, gridName: string) {
+async function findIndexes(userId: string, courseID: string, gridName: string, weekName: string) {
 
     try {
 
@@ -129,6 +131,10 @@ async function findIndexes(userId: string, courseID: string, gridName: string) {
         let courseIndex = -1;
 
         let gridIndex = -1;
+
+        let weekIndex = -1;
+
+
         const accountsCollection = mongoClient.db(MONGO_DB_NAME).collection<User>(MONGO_COLLECTION_ACCOUNT);
 
         const userDocument = await accountsCollection.findOne({ _id: userId })
@@ -138,10 +144,14 @@ async function findIndexes(userId: string, courseID: string, gridName: string) {
 
             if (userDocument.courses[courseIndex].grids) {
                 gridIndex = userDocument!.courses![courseIndex].grids!.findIndex(grid => grid.gridName === gridName);
+
+                if (gridIndex >= 0 && userDocument.courses[courseIndex].grids![gridIndex].weeks) {
+                    weekIndex = userDocument.courses[courseIndex].grids![gridIndex].weeks!.findIndex(week => week.weekName === weekName);
+                }
             }
         }
 
-        return { courseIndex, gridIndex };
+        return { courseIndex, gridIndex, weekIndex };
 
     } finally {
 
