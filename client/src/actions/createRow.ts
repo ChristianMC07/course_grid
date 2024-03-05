@@ -28,9 +28,12 @@ export async function createRow(formState: ErrorMessage, formData: FormData) {
         notesError: '',
     }
 
-    let _id: string = formData.get('courseID') as string;
+    let _id: string = userId!;
+    let courseID: string = formData.get('courseID') as string;
     let gridName: string = formData.get('gridName') as string;
     let weekName: string = formData.get('weekName') as string;
+
+    let courseIndex = findCourseIndex(_id, courseID);
 
 
     let classID: any = formData.get('classID');
@@ -80,23 +83,65 @@ export async function createRow(formState: ErrorMessage, formData: FormData) {
     if (Object.values(errorMessages).join('') === '') {
         try {
             await mongoClient.connect();
+            const accountsCollection = mongoClient.db(MONGO_DB_NAME).collection<User>(MONGO_COLLECTION_ACCOUNT);
+
+            // New row data from formData
+            const newRow = {
+                classID: formData.get('classID'),
+                learningOutcome: formData.get('learningOutcome'),
+                enablingOutcome: formData.get('enablingOutcome'),
+                material: formData.get('material'),
+                assessment: formData.get('assessment'),
+                notes: formData.get('notes'),
+            };
+
+            const updateResult: UpdateResult = await accountsCollection.updateOne(
+                { _id: _id, "courses.courseID": courseID, "courses.grids.gridName": gridName, "courses.grids.weeks.weekName": weekName },
+                { $push: { "courses.$.grids.$.weeks.$.rows": newRow } }
+            );
+
+            updateResult.modifiedCount === 1 ? console.log("The row was added") : console.log('No luck');
 
         }
-        catch {
+        catch (error) {
+            console.log('This is the error and will appear in the server : ' + error)
 
         }
         finally {
             await mongoClient.close();
 
         }
-
-
-
     } else {
         return errorMessages;
     }
 
 
+
+
+}
+
+async function findCourseIndex(userId: string, courseID: string) {
+
+    try {
+
+        await mongoClient.connect();
+
+
+        const accountsCollection = mongoClient.db(MONGO_DB_NAME).collection<User>(MONGO_COLLECTION_ACCOUNT);
+
+        const userDocument = await accountsCollection.findOne({ _id: userId })
+
+        let courseIndex = -1;
+        if (userDocument && userDocument.courses) {
+            courseIndex = userDocument.courses.findIndex(course => course.courseID === courseID);
+        }
+
+        return courseIndex;
+
+    } finally {
+
+        await mongoClient.close();
+    }
 
 
 }
