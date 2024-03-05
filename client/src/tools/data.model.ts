@@ -32,9 +32,9 @@ export interface Week {
 
 export interface Row {
     classID: string;
-    learningOut: string;
-    enablingOut: string;
+    learningOutcome: string;
+    enablingOutcome: string;
     material: string;
-    assesment: string;
+    assessment: string;
     notes: string;
 }
