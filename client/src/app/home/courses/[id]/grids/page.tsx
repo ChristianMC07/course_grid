@@ -25,7 +25,7 @@ export default async function GridsPage(props: GridsPageProps) {
                 </div>
             </div>
             <main className="flex gap-x-20 flex-wrap justify-evenly">
-                {userGrids.length > 0 ? (
+                {userGrids ? (
                     userGrids.map((grid, index) => (
                         <div key={index} className="mt-10 max-w-sm  bg-white rounded-lg border border-gray-200 shadow-md p-10 flex flex-col gap-y-2">
                             <h2 className="text-xl font-bold text-gray-800">{grid.gridName}</h2>
