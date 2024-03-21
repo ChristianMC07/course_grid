@@ -5,6 +5,8 @@ import { MongoClient, UpdateResult } from "mongodb";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import sanitize from "sanitize-html";
+import { revalidatePath } from "next/cache";
+
 
 const MONGO_URL: string = "mongodb://mongo:27017/";
 const MONGO_DB_NAME: string = "dbGrids";
@@ -103,6 +105,8 @@ export async function createRow(formState: ErrorMessage, formData: FormData) {
             );
 
             updateResult.modifiedCount === 1 ? console.log("The row was added") : console.log('No luck');
+            revalidatePath(`/home/courses/${courseID}/grids/${indexes.gridIndex}/view`);
+            redirect(`/home/courses/${courseID}/grids/${indexes.gridIndex}/view`);
 
         }
         catch (error) {
