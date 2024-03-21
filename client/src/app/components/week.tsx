@@ -88,7 +88,7 @@ export default function WeekComp({ gridInfo, courseID }: WeekProps) {
                                             <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="material"></textarea>
                                             <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="assessment"></textarea>
                                             <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="notes"></textarea>
-                                            <button><Image src={`/images/icons/plus.png`} width={30} height={30} alt="Plus button to add new row"></Image></button>
+                                            <button type="submit"><Image src={`/images/icons/plus.png`} width={30} height={30} alt="Plus button to add new row"></Image></button>
                                         </form>
                                     </div>
                                 </div>
