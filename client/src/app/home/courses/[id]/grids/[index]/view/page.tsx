@@ -2,8 +2,6 @@ import { Grid } from "@/tools/data.model";
 import { gridWeeks } from "@/actions/gridWeeks";
 import WeekComp from "@/app/components/week";
 
-export const revalidate = 0;
-
 interface ViewGridsProps {
     params: {
         id: string,
