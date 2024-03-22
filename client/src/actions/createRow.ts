@@ -18,7 +18,7 @@ type ErrorMessage = {
 
 let mongoClient: MongoClient = new MongoClient(MONGO_URL);
 
-export async function createRow(formState: ErrorMessage | undefined, formData: FormData) {
+export async function createRow(formState: ErrorMessage, formData: FormData) {
     let { userId } = auth();
 
     let errorMessages: ErrorMessage = {
