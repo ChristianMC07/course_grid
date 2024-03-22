@@ -10,3 +10,7 @@ const MONGO_DB_NAME: string = "dbGrids";
 const MONGO_COLLECTION_ACCOUNT: string = "accounts";
 
 let mongoClient: MongoClient = new MongoClient(MONGO_URL);
+
+export async function deleteRow(formData: FormData) {
+
+}
