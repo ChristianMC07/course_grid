@@ -79,18 +79,51 @@ export default function WeekComp({ gridInfo, courseID }: WeekProps) {
                                             ) : ''
 
                                             }
-                                            <form className="flex py-6 gap-x-4 items-center" action={action}>
+                                            <form
+                                                className="flex py-6 gap-x-4 items-center"
+                                                action={action}
+                                                key={formState?.resetKey}>
                                                 <input type="hidden" name="courseID" value={courseID} />
                                                 <input type="hidden" name="gridName" value={gridInfo.gridName} />
                                                 <input type="hidden" name="weekName" value={gridInfo.weeks![weekIndex].weekName} />
 
-                                                <input className="w-28 h-10 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline" name="classID"></input>
-                                                <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="learningOutcome"></textarea>
-                                                <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="enablingOutcome"></textarea>
-                                                <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="material"></textarea>
-                                                <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="assessment"></textarea>
-                                                <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="notes"></textarea>
-                                                <button type="submit"><Image src={`/images/icons/plus.png`} width={30} height={30} alt="Plus button to add new row"></Image></button>
+                                                <div className="flex flex-col w-28">
+                                                    <input
+                                                        className="w-28 h-10 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline"
+                                                        name="classID"
+                                                        defaultValue={''}
+                                                    />
+                                                    {formState?.classIDError ? <span className='text-red-500 flex flex-wrap'>{formState.classIDError} </span> : ''}
+                                                </div>
+
+                                                <div className="flex flex-col w-64">
+                                                    <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="learningOutcome" defaultValue={''}></textarea>
+                                                    {formState?.learningOutcomeError ? <span className='text-red-500 flex flex-wrap'>{formState.learningOutcomeError} </span> : ''}
+                                                </div>
+
+                                                <div className="flex flex-col w-64">
+                                                    <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="enablingOutcome" defaultValue={''}></textarea>
+                                                    {formState?.enablingOutcomeError ? <span className='text-red-500 flex flex-wrap'>{formState.enablingOutcomeError} </span> : ''}
+                                                </div>
+
+                                                <div className="flex flex-col w-64">
+                                                    <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="material"></textarea>
+                                                    {formState?.materialError ? <span className='text-red-500 flex flex-wrap'>{formState.materialError} </span> : ''}
+                                                </div>
+
+                                                <div className="flex flex-col w-64">
+                                                    <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="assessment"></textarea>
+                                                    {formState?.assessmentError ? <span className='text-red-500 flex flex-wrap'>{formState.assessmentError} </span> : ''}
+                                                </div>
+
+                                                <div className="flex flex-col w-64">
+                                                    <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="notes"></textarea>
+                                                    {formState?.notesError ? <span className='text-red-500 flex flex-wrap'>{formState.notesError} </span> : ''}
+                                                </div>
+
+                                                <div className="flex items-center gap-x-4 w-28">
+                                                    <button type="submit"><Image src={`/images/icons/plus.png`} width={30} height={30} alt="Plus button to add new row"></Image></button>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
