@@ -69,10 +69,11 @@ export default function WeekComp({ gridInfo, courseID }: WeekProps) {
                                                         <div className="w-64 p-4  border border-slate-400">{row.material}</div>
                                                         <div className="w-64 p-4  border border-slate-400">{row.assessment}</div>
                                                         <div className="w-64 p-4  border border-slate-400">{row.notes}</div>
-                                                        <div className="flex items-center gap-x-4">
-                                                            <Image width={30} height={30} alt="Green pencil. Edit selected row" src='/images/icons/edit.png' />
+
+                                                        <form className="flex items-center gap-x-4">
+                                                            <button type="submit"><Image width={30} height={30} alt="Green pencil. Edit selected row" src='/images/icons/edit.png' /></button>
                                                             <Image width={30} height={30} alt="Red trash bin to delete week" src='/images/icons/delete-128.png' />
-                                                        </div>
+                                                        </form>
                                                         {/* Additional row cells */}
                                                     </div>
                                                 ))
