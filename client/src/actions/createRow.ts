@@ -18,15 +18,15 @@ type ErrorMessage = {
 
 let mongoClient: MongoClient = new MongoClient(MONGO_URL);
 
-export async function createRow(formState: ErrorMessage, formData: FormData) {
+export async function createRow(formState: ErrorMessage | undefined, formData: FormData) {
     let { userId } = auth();
 
     let errorMessages: ErrorMessage = {
         classIDError: '',
         learningOutcomeError: '',
-        enablingOutcome: '',
+        enablingOutcomeError: '',
         materialError: '',
-        assessment: '',
+        assessmentError: '',
         notesError: '',
     }
 
@@ -106,7 +106,11 @@ export async function createRow(formState: ErrorMessage, formData: FormData) {
 
             updateResult.modifiedCount === 1 ? console.log("The row was added") : console.log('No luck');
             revalidatePath(`/home/courses/${courseID}/grids/${indexes.gridIndex}/view`);
-            redirect(`/home/courses/${courseID}/grids/${indexes.gridIndex}/view`);
+
+            return {
+                ...formState,
+                resetKey: Date.now().toString(),
+            }
 
         }
         catch (error) {
@@ -118,6 +122,7 @@ export async function createRow(formState: ErrorMessage, formData: FormData) {
 
         }
     } else {
+        console.log(errorMessages);
         return errorMessages;
     }
 
