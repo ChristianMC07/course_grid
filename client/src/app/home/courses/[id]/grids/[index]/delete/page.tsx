@@ -22,15 +22,17 @@ const DeleteGridPage = () => {
     const index = parseInt(urlParts[urlParts.length - 2]);
     setCourseId(courseID);
     setGridIndex(index);
-
+  
     const loadGridData = async () => {
       const grid = await fetchGrid(courseID, index);
       if (grid) {
         setGridData(grid);
+        // Check if weeks exists and is an array before attempting to access its length
+        setWeeksCount(grid.weeks ? grid.weeks.length : 0);
         setIsLoading(false);
       }
     };
-
+  
     loadGridData();
   }, []);
 
