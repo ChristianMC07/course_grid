@@ -16,7 +16,7 @@ export default async function Courses() {
           </Link>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {userInfo?.courses?.map((course, index) => (
             <div key={index} className="bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden">
               <div className="h-48 w-full relative">
