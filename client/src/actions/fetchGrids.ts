@@ -1,4 +1,3 @@
-// fetchGrid.ts
 'use server';
 
 import { MongoClient } from "mongodb";
@@ -9,35 +8,36 @@ const MONGO_URL = "mongodb://mongo:27017/";
 const MONGO_DB_NAME = "dbGrids";
 const MONGO_COLLECTION_ACCOUNT = "accounts";
 
-const mongoClient = new MongoClient(MONGO_URL);
+let mongoClient = new MongoClient(MONGO_URL);
 
-export async function fetchGrid(gridName: string) {
-  const { userId } = auth();
+export async function fetchGrid(courseID: string, gridIndex: number): Promise<Grid | null> {
+    const { userId } = auth();
 
-  if (typeof userId !== 'string') {
-    console.error('User ID is null or not a string');
-    return null;
-  }
-
-  try {
-    await mongoClient.connect();
-    const accountsCollection = mongoClient.db(MONGO_DB_NAME).collection<User>(MONGO_COLLECTION_ACCOUNT);
-    const userInfo = await accountsCollection.findOne({ _id: userId });
-
-    // Look for the grid by name across all courses
-    for (const course of userInfo?.courses ?? []) {
-      const grid = course.grids?.find(g => g.gridName === gridName);
-      if (grid) {
-        return grid; // Found the grid
-      }
+    // Ensure userId is not null and is a string before proceeding.
+    if (typeof userId !== 'string') {
+        console.error('User ID is null or not a string');
+        return null;
     }
 
-    console.log('Grid not found');
-    return null; // Grid not found
-  } catch (error) {
-    console.error('Error fetching grid:', error);
-    return null;
-  } finally {
-    await mongoClient.close();
-  }
+    try {
+        await mongoClient.connect();
+        const accountsCollection = mongoClient.db(MONGO_DB_NAME).collection<User>(MONGO_COLLECTION_ACCOUNT);
+
+        // Use userId directly without converting to ObjectId, as MongoDB handles this automatically.
+        const userInfo = await accountsCollection.findOne({ _id: userId });
+
+        // Now proceed with finding the course and grid as before.
+        const course = userInfo?.courses?.find(course => course.courseID === courseID);
+        if (!course || !course.grids || course.grids.length <= gridIndex) {
+            console.error('Course or grid not found');
+            return null;
+        }
+
+        return course.grids[gridIndex];
+    } catch (error) {
+        console.error('Error fetching grid:', error);
+        return null;
+    } finally {
+        await mongoClient.close();
+    }
 }
