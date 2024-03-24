@@ -142,6 +142,15 @@ export async function deleteRow(formData: FormData) {
 
     const deletePath = `courses.${indexes.courseIndex}.grids.${indexes.gridIndex}.weeks.${indexes.weekIndex}.rows.${rowIndex}`;
 
+    try {
+        mongoClient.connect();
+
+    } catch {
+
+    } finally {
+        mongoClient.close();
+
+    }
 
 }
 
