@@ -21,6 +21,9 @@ export default function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
 
     const [visibleWeeks, setVisibleWeeks] = useState<{ [key: string]: boolean }>({});
 
+    const [editRowIndex, setEditRowIndex] = useState<null | number>(null);
+
+
     const toggleDropdown = (index: number) => {
         setVisibleWeeks(prev => ({ ...prev, [index]: !prev[index] }));
     };
@@ -76,17 +79,10 @@ export default function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
 
                                                             <input type="hidden" name="courseID" value={courseID} />
                                                             <input type="hidden" name="gridName" value={gridInfo.gridName} />
+                                                            <input type="hidden" name="gridID" value={gridID} />
                                                             <input type="hidden" name="weekName" value={gridInfo.weeks![weekIndex].weekName} />
                                                             <input type="hidden" name="rowIndex" value={rowIndex} />
-                                                            <input type="hidden" name="classID" value={row.classID} />
-                                                            <input type="hidden" name="learningOutcome" value={row.learningOutcome} />
-                                                            <input type="hidden" name="enablingOutcome" value={row.enablingOutcome} />
-                                                            <input type="hidden" name="material" value={row.material} />
-                                                            <input type="hidden" name="assessment" value={row.assessment} />
-                                                            <input type="hidden" name="notes" value={row.notes} />
                                                             <button
-                                                                type="submit"
-
                                                             ><Image width={30} height={30} alt="Green pencil. Edit selected row" src='/images/icons/edit.png' /></button>
                                                             <button
                                                                 type="submit"
