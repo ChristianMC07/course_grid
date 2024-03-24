@@ -136,9 +136,11 @@ export async function deleteRow(formData: FormData) {
     let courseID: string = formData.get('courseID') as string;
     let gridName: string = formData.get('gridName') as string;
     let weekName: string = formData.get('weekName') as string;
-    let rowIndex: string = formData.get('rowIndex') as string;
+    let rowIndex: number = parseInt(formData.get('rowIndex') as string);
 
     const indexes = await findIndexes(userId!, courseID, gridName, weekName);
+
+    const deletePath = `courses.${indexes.courseIndex}.grids.${indexes.gridIndex}.weeks.${indexes.weekIndex}.rows.${rowIndex}`;
 
 
 }
@@ -149,11 +151,11 @@ async function findIndexes(userId: string, courseID: string, gridName: string, w
 
         await mongoClient.connect();
 
-        let courseIndex = -1;
+        let courseIndex: number = -1;
 
-        let gridIndex = -1;
+        let gridIndex: number = -1;
 
-        let weekIndex = -1;
+        let weekIndex: number = -1;
 
 
         const accountsCollection = mongoClient.db(MONGO_DB_NAME).collection<User>(MONGO_COLLECTION_ACCOUNT);
