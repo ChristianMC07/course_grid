@@ -1,6 +1,6 @@
 'use server'
 
-import { User, Grid, Week, Row } from "@/tools/data.model";
+import { User, Grid, Week, Row, Accounts } from "@/tools/data.model";
 import { MongoClient, UpdateResult } from "mongodb";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
@@ -143,12 +143,19 @@ export async function deleteRow(formData: FormData) {
     const deletePath = `courses.${indexes.courseIndex}.grids.${indexes.gridIndex}.weeks.${indexes.weekIndex}.rows.${rowIndex}`;
 
     try {
-        mongoClient.connect();
+        await mongoClient.connect();
+        const accountsCollection = mongoClient.db(MONGO_DB_NAME).collection<User>(MONGO_COLLECTION_ACCOUNT);
+
+        // unsetting the row
+        await accountsCollection.updateOne(
+            { _id: userId! },
+            { $unset: { [deletePath]: 1 } }
+        )
 
     } catch {
 
     } finally {
-        mongoClient.close();
+        await mongoClient.close();
 
     }
 
