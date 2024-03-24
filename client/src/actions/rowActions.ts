@@ -152,13 +152,21 @@ export async function deleteRow(formData: FormData) {
             { $unset: { [deletePath]: 1 } }
         )
 
-    } catch {
+        //Then, remove the undefined values
+        const pullPath = `courses.${indexes.courseIndex}.grids.${indexes.gridIndex}.weeks.${indexes.weekIndex}.rows`;
+
+        await accountsCollection.updateOne(
+            { _id: userId! },
+            { $pull: { [pullPath]: null } }
+        );
+
+    } catch (error) {
+        console.error('Error deleting row: ' + error);
 
     } finally {
         await mongoClient.close();
 
     }
-
 }
 
 async function findIndexes(userId: string, courseID: string, gridName: string, weekName: string) {
