@@ -24,6 +24,7 @@ export interface Course {
 export interface Grid {
     gridName: string;
     archived?: boolean;
+    archivedAt?: string;
     weeks?: Week[];
 }
 
