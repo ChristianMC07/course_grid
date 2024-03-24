@@ -73,6 +73,12 @@ export default function WeekComp({ gridInfo, courseID }: WeekProps) {
 
                                                         <form className="flex items-center gap-x-4">
 
+                                                            <input type="hidden" name="courseID" value={courseID} />
+                                                            <input type="hidden" name="gridName" value={gridInfo.gridName} />
+                                                            <input type="hidden" name="weekName" value={gridInfo.weeks![weekIndex].weekName} />
+                                                            <input type="hidden" name="rowIndex" value={weekIndex} />
+
+
                                                             <button type="submit"><Image width={30} height={30} alt="Green pencil. Edit selected row" src='/images/icons/edit.png' /></button>
                                                             <button
                                                                 type="submit"
