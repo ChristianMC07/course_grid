@@ -132,7 +132,10 @@ export async function createRow(formState: ErrorMessage, formData: FormData) {
 }
 
 export async function deleteRow(formData: FormData) {
-
+    let { userId } = auth();
+    let courseID: string = formData.get('courseID') as string;
+    let gridName: string = formData.get('gridName') as string;
+    let weekName: string = formData.get('weekName') as string;
 
 
 }
