@@ -76,7 +76,7 @@ export default function WeekComp({ gridInfo, courseID }: WeekProps) {
                                                             <input type="hidden" name="courseID" value={courseID} />
                                                             <input type="hidden" name="gridName" value={gridInfo.gridName} />
                                                             <input type="hidden" name="weekName" value={gridInfo.weeks![weekIndex].weekName} />
-                                                            <input type="hidden" name="rowIndex" value={weekIndex} />
+                                                            <input type="hidden" name="rowIndex" value={rowIndex} />
 
 
                                                             <button type="submit"><Image width={30} height={30} alt="Green pencil. Edit selected row" src='/images/icons/edit.png' /></button>
