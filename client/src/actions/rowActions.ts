@@ -160,6 +160,8 @@ export async function deleteRow(formData: FormData) {
             { $pull: { [pullPath]: null } }
         );
 
+        revalidatePath(`/home/courses/${courseID}/grids/${indexes.gridIndex}/view`);
+
     } catch (error) {
         console.error('Error deleting row: ' + error);
 
