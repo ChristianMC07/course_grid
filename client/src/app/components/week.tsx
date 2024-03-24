@@ -4,15 +4,16 @@ import { Grid, Week } from "@/tools/data.model";
 import React, { useState } from 'react';
 import { useFormState } from 'react-dom';
 import { createRow } from "@/actions/rowActions";
-import { useRef } from 'react';
 import { deleteRow } from "@/actions/rowActions";
+import Link from "next/link";
 
 interface WeekProps {
     gridInfo: Grid;
     courseID: string;
+    gridID: string;
 };
 
-export default function WeekComp({ gridInfo, courseID }: WeekProps) {
+export default function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
 
     type ErrorMessage = {
         [key: string]: any;
@@ -77,9 +78,16 @@ export default function WeekComp({ gridInfo, courseID }: WeekProps) {
                                                             <input type="hidden" name="gridName" value={gridInfo.gridName} />
                                                             <input type="hidden" name="weekName" value={gridInfo.weeks![weekIndex].weekName} />
                                                             <input type="hidden" name="rowIndex" value={rowIndex} />
+                                                            <input type="hidden" name="classID" value={row.classID} />
+                                                            <input type="hidden" name="learningOutcome" value={row.learningOutcome} />
+                                                            <input type="hidden" name="enablingOutcome" value={row.enablingOutcome} />
+                                                            <input type="hidden" name="material" value={row.material} />
+                                                            <input type="hidden" name="assessment" value={row.assessment} />
+                                                            <input type="hidden" name="notes" value={row.notes} />
+                                                            <button
+                                                                type="submit"
 
-
-                                                            <button type="submit"><Image width={30} height={30} alt="Green pencil. Edit selected row" src='/images/icons/edit.png' /></button>
+                                                            ><Image width={30} height={30} alt="Green pencil. Edit selected row" src='/images/icons/edit.png' /></button>
                                                             <button
                                                                 type="submit"
                                                                 formAction={deleteRow}
