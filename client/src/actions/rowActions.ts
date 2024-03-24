@@ -136,6 +136,9 @@ export async function deleteRow(formData: FormData) {
     let courseID: string = formData.get('courseID') as string;
     let gridName: string = formData.get('gridName') as string;
     let weekName: string = formData.get('weekName') as string;
+    let rowIndex: string = formData.get('rowIndex') as string;
+
+    const indexes = await findIndexes(userId!, courseID, gridName, weekName);
 
 
 }
