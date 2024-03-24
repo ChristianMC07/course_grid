@@ -28,6 +28,10 @@ export default function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
         setVisibleWeeks(prev => ({ ...prev, [index]: !prev[index] }));
     };
 
+    const toggleEdit = (index: number) => {
+        setEditRowIndex(prevIndex => prevIndex === index ? null : index);
+    };
+
     const [formState, action] = useFormState<ErrorMessage, FormData>(createRow, new FormData());
 
 
