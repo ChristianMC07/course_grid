@@ -1,6 +1,6 @@
 'use server'
 
-import { User, Grid, Week, Row } from "@/tools/data.model";
+import { User, Grid, Week, Row, Accounts } from "@/tools/data.model";
 import { MongoClient, UpdateResult } from "mongodb";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
@@ -131,17 +131,57 @@ export async function createRow(formState: ErrorMessage, formData: FormData) {
 
 }
 
+export async function deleteRow(formData: FormData) {
+    let { userId } = auth();
+    let courseID: string = formData.get('courseID') as string;
+    let gridName: string = formData.get('gridName') as string;
+    let weekName: string = formData.get('weekName') as string;
+    let rowIndex: number = parseInt(formData.get('rowIndex') as string);
+
+    const indexes = await findIndexes(userId!, courseID, gridName, weekName);
+
+    const deletePath = `courses.${indexes.courseIndex}.grids.${indexes.gridIndex}.weeks.${indexes.weekIndex}.rows.${rowIndex}`;
+
+    try {
+        await mongoClient.connect();
+        const accountsCollection = mongoClient.db(MONGO_DB_NAME).collection<User>(MONGO_COLLECTION_ACCOUNT);
+
+        // unsetting the row
+        await accountsCollection.updateOne(
+            { _id: userId! },
+            { $unset: { [deletePath]: 1 } }
+        )
+
+        //Then, remove the undefined values
+        const pullPath = `courses.${indexes.courseIndex}.grids.${indexes.gridIndex}.weeks.${indexes.weekIndex}.rows`;
+
+        await accountsCollection.updateOne(
+            { _id: userId! },
+            { $pull: { [pullPath]: null } }
+        );
+
+        revalidatePath(`/home/courses/${courseID}/grids/${indexes.gridIndex}/view`);
+
+    } catch (error) {
+        console.error('Error deleting row: ' + error);
+
+    } finally {
+        await mongoClient.close();
+
+    }
+}
+
 async function findIndexes(userId: string, courseID: string, gridName: string, weekName: string) {
 
     try {
 
         await mongoClient.connect();
 
-        let courseIndex = -1;
+        let courseIndex: number = -1;
 
-        let gridIndex = -1;
+        let gridIndex: number = -1;
 
-        let weekIndex = -1;
+        let weekIndex: number = -1;
 
 
         const accountsCollection = mongoClient.db(MONGO_DB_NAME).collection<User>(MONGO_COLLECTION_ACCOUNT);

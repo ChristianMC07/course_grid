@@ -3,8 +3,9 @@ import Image from "next/image";
 import { Grid, Week } from "@/tools/data.model";
 import React, { useState } from 'react';
 import { useFormState } from 'react-dom';
-import { createRow } from "@/actions/createRow";
+import { createRow } from "@/actions/rowActions";
 import { useRef } from 'react';
+import { deleteRow } from "@/actions/rowActions";
 
 interface WeekProps {
     gridInfo: Grid;
@@ -69,10 +70,23 @@ export default function WeekComp({ gridInfo, courseID }: WeekProps) {
                                                         <div className="w-64 p-4  border border-slate-400">{row.material}</div>
                                                         <div className="w-64 p-4  border border-slate-400">{row.assessment}</div>
                                                         <div className="w-64 p-4  border border-slate-400">{row.notes}</div>
-                                                        <div className="flex items-center gap-x-4">
-                                                            <Image width={30} height={30} alt="Green pencil. Edit selected row" src='/images/icons/edit.png' />
-                                                            <Image width={30} height={30} alt="Red trash bin to delete week" src='/images/icons/delete-128.png' />
-                                                        </div>
+
+                                                        <form className="flex items-center gap-x-4">
+
+                                                            <input type="hidden" name="courseID" value={courseID} />
+                                                            <input type="hidden" name="gridName" value={gridInfo.gridName} />
+                                                            <input type="hidden" name="weekName" value={gridInfo.weeks![weekIndex].weekName} />
+                                                            <input type="hidden" name="rowIndex" value={weekIndex} />
+
+
+                                                            <button type="submit"><Image width={30} height={30} alt="Green pencil. Edit selected row" src='/images/icons/edit.png' /></button>
+                                                            <button
+                                                                type="submit"
+                                                                formAction={deleteRow}
+                                                            >
+                                                                <Image width={30} height={30} alt="Red trash bin to delete week" src='/images/icons/delete-128.png' />
+                                                            </button>
+                                                        </form>
                                                         {/* Additional row cells */}
                                                     </div>
                                                 ))
