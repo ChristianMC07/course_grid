@@ -3,8 +3,9 @@ import Image from "next/image";
 import { Grid, Week } from "@/tools/data.model";
 import React, { useState } from 'react';
 import { useFormState } from 'react-dom';
-import { createRow } from "@/actions/createRow";
+import { createRow } from "@/actions/rowActions";
 import { useRef } from 'react';
+import { deleteRow } from "@/actions/rowActions";
 
 interface WeekProps {
     gridInfo: Grid;
@@ -71,8 +72,14 @@ export default function WeekComp({ gridInfo, courseID }: WeekProps) {
                                                         <div className="w-64 p-4  border border-slate-400">{row.notes}</div>
 
                                                         <form className="flex items-center gap-x-4">
+
                                                             <button type="submit"><Image width={30} height={30} alt="Green pencil. Edit selected row" src='/images/icons/edit.png' /></button>
-                                                            <Image width={30} height={30} alt="Red trash bin to delete week" src='/images/icons/delete-128.png' />
+                                                            <button
+                                                                type="submit"
+                                                                formAction={deleteRow}
+                                                            >
+                                                                <Image width={30} height={30} alt="Red trash bin to delete week" src='/images/icons/delete-128.png' />
+                                                            </button>
                                                         </form>
                                                         {/* Additional row cells */}
                                                     </div>

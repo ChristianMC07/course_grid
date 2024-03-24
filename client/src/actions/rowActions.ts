@@ -131,6 +131,12 @@ export async function createRow(formState: ErrorMessage, formData: FormData) {
 
 }
 
+export async function deleteRow(formData: FormData) {
+
+
+
+}
+
 async function findIndexes(userId: string, courseID: string, gridName: string, weekName: string) {
 
     try {
