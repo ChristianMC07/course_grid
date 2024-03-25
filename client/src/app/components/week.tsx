@@ -71,31 +71,78 @@ export default function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
                                             {(week.rows && week.rows.length > 0) ? (
                                                 week.rows.map((row, rowIndex) => (
                                                     <div key={rowIndex} className="flex gap-x-4">
-                                                        <div className="w-28 p-4 border border-slate-400">{row.classID}</div>
-                                                        <div className="w-64 p-4 border border-slate-400 whitespace-pre text-wrap">{row.learningOutcome}</div>
-                                                        <div className="w-64 p-4 border border-slate-400 whitespace-pre text-wrap">
-                                                            {row.enablingOutcome}</div>
-                                                        <div className="w-64 p-4  border border-slate-400">{row.material}</div>
-                                                        <div className="w-64 p-4  border border-slate-400">{row.assessment}</div>
-                                                        <div className="w-64 p-4  border border-slate-400">{row.notes}</div>
+                                                        {editRowIndex === rowIndex ? (
+                                                            <form className="flex gap-x-4" key={formState?.resetKey}>
+                                                                <input type="hidden" name="courseID" value={courseID} />
+                                                                <input type="hidden" name="gridName" value={gridInfo.gridName} />
+                                                                <input type="hidden" name="weekName" value={gridInfo.weeks![weekIndex].weekName} />
 
-                                                        <form className="flex items-center gap-x-4">
+                                                                <div className="flex flex-col w-28">
+                                                                    <input
+                                                                        className="w-28 h-10 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline"
+                                                                        name="classID"
+                                                                        defaultValue={row.classID}
+                                                                    />
+                                                                    {formState?.classIDError ? <span className='text-red-500 flex flex-wrap'>{formState.classIDError} </span> : ''}
+                                                                </div>
 
-                                                            <input type="hidden" name="courseID" value={courseID} />
-                                                            <input type="hidden" name="gridName" value={gridInfo.gridName} />
-                                                            <input type="hidden" name="gridID" value={gridID} />
-                                                            <input type="hidden" name="weekName" value={gridInfo.weeks![weekIndex].weekName} />
-                                                            <input type="hidden" name="rowIndex" value={rowIndex} />
-                                                            <button
-                                                            ><Image width={30} height={30} alt="Green pencil. Edit selected row" src='/images/icons/edit.png' /></button>
-                                                            <button
-                                                                type="submit"
-                                                                formAction={deleteRow}
-                                                            >
-                                                                <Image width={30} height={30} alt="Red trash bin to delete week" src='/images/icons/delete-128.png' />
-                                                            </button>
-                                                        </form>
-                                                        {/* Additional row cells */}
+                                                                <div className="flex flex-col w-64">
+                                                                    <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="learningOutcome" defaultValue={row.learningOutcome}></textarea>
+                                                                    {formState?.learningOutcomeError ? <span className='text-red-500 flex flex-wrap'>{formState.learningOutcomeError} </span> : ''}
+                                                                </div>
+
+                                                                <div className="flex flex-col w-64">
+                                                                    <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="enablingOutcome" defaultValue={row.enablingOutcome}></textarea>
+                                                                    {formState?.enablingOutcomeError ? <span className='text-red-500 flex flex-wrap'>{formState.enablingOutcomeError} </span> : ''}
+                                                                </div>
+
+                                                                <div className="flex flex-col w-64">
+                                                                    <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="material" defaultValue={row.material}></textarea>
+                                                                    {formState?.materialError ? <span className='text-red-500 flex flex-wrap'>{formState.materialError} </span> : ''}
+                                                                </div>
+
+                                                                <div className="flex flex-col w-64">
+                                                                    <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="assessment" defaultValue={row.assessment}></textarea>
+                                                                    {formState?.assessmentError ? <span className='text-red-500 flex flex-wrap'>{formState.assessmentError} </span> : ''}
+                                                                </div>
+
+                                                                <div className="flex flex-col w-64">
+                                                                    <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="notes" defaultValue={row.notes}></textarea>
+                                                                    {formState?.notesError ? <span className='text-red-500 flex flex-wrap'>{formState.notesError} </span> : ''}
+                                                                </div>
+                                                                <button type="submit">Save</button>
+                                                                <button type="button" onClick={() => setEditRowIndex(null)}>Cancel</button>
+                                                            </form>
+                                                        ) : <>
+                                                            <div className="w-28 p-4 border border-slate-400">{row.classID}</div>
+                                                            <div className="w-64 p-4 border border-slate-400 whitespace-pre text-wrap">{row.learningOutcome}</div>
+                                                            <div className="w-64 p-4 border border-slate-400 whitespace-pre text-wrap">
+                                                                {row.enablingOutcome}</div>
+                                                            <div className="w-64 p-4  border border-slate-400">{row.material}</div>
+                                                            <div className="w-64 p-4  border border-slate-400">{row.assessment}</div>
+                                                            <div className="w-64 p-4  border border-slate-400">{row.notes}</div>
+
+                                                            <form className="flex items-center gap-x-4">
+
+                                                                <input type="hidden" name="courseID" value={courseID} />
+                                                                <input type="hidden" name="gridName" value={gridInfo.gridName} />
+                                                                <input type="hidden" name="gridID" value={gridID} />
+                                                                <input type="hidden" name="weekName" value={gridInfo.weeks![weekIndex].weekName} />
+                                                                <input type="hidden" name="rowIndex" value={rowIndex} />
+
+
+                                                                <Image width={30} height={30} alt="Green pencil. Edit selected row" src='/images/icons/edit.png' onClick={() => toggleEdit(rowIndex)} />
+                                                                <button
+                                                                    type="submit"
+                                                                    formAction={deleteRow}
+                                                                >
+                                                                    <Image width={30} height={30} alt="Red trash bin to delete week" src='/images/icons/delete-128.png' />
+                                                                </button>
+                                                            </form>
+                                                            {/* Additional row cells */}
+
+
+                                                        </>}
                                                     </div>
                                                 ))
                                             ) : ''
