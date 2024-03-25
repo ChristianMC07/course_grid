@@ -1,9 +1,9 @@
 'use client';
 import Image from "next/image";
 import { Grid, Week } from "@/tools/data.model";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
-import { createRow } from "@/actions/rowActions";
+import { createRow, editRow } from "@/actions/rowActions";
 import { deleteRow } from "@/actions/rowActions";
 import Link from "next/link";
 
@@ -13,7 +13,7 @@ interface WeekProps {
     gridID: string;
 };
 
-export default function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
+export default async function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
 
     type ErrorMessage = {
         [key: string]: any;
@@ -32,9 +32,18 @@ export default function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
         setEditRowIndex(prevIndex => prevIndex === index ? null : index);
     };
 
+    const formRef = React.useRef(null);
+
     const [formState, action] = useFormState<ErrorMessage, FormData>(createRow, new FormData());
 
+    const [editFormState, editAction] = useFormState<ErrorMessage, FormData>(editRow, new FormData());
 
+    const handleSubmit = async (event: any) => {
+        event.preventDefault();
+        const formData = new FormData(formRef.current!); // Use the form ref here
+        editAction(formData);
+        setEditRowIndex(null);
+    }
 
     return (
         <section>
@@ -72,10 +81,11 @@ export default function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
                                                 week.rows.map((row, rowIndex) => (
                                                     <div key={rowIndex} className="flex gap-x-4">
                                                         {editRowIndex === rowIndex ? (
-                                                            <form className="flex gap-x-4" key={formState?.resetKey}>
+                                                            <form className="flex gap-x-4" key={editFormState?.resetKey} ref={formRef}>
                                                                 <input type="hidden" name="courseID" value={courseID} />
                                                                 <input type="hidden" name="gridName" value={gridInfo.gridName} />
                                                                 <input type="hidden" name="weekName" value={gridInfo.weeks![weekIndex].weekName} />
+                                                                <input type="hidden" name="rowIndex" value={rowIndex} />
 
                                                                 <div className="flex flex-col w-28">
                                                                     <input
@@ -83,34 +93,34 @@ export default function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
                                                                         name="classID"
                                                                         defaultValue={row.classID}
                                                                     />
-                                                                    {formState?.classIDError ? <span className='text-red-500 flex flex-wrap'>{formState.classIDError} </span> : ''}
+                                                                    {editFormState?.classIDError ? <span className='text-red-500 flex flex-wrap'>{editFormState.classIDError} </span> : ''}
                                                                 </div>
 
                                                                 <div className="flex flex-col w-64">
                                                                     <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="learningOutcome" defaultValue={row.learningOutcome}></textarea>
-                                                                    {formState?.learningOutcomeError ? <span className='text-red-500 flex flex-wrap'>{formState.learningOutcomeError} </span> : ''}
+                                                                    {editFormState?.learningOutcomeError ? <span className='text-red-500 flex flex-wrap'>{editFormState.learningOutcomeError} </span> : ''}
                                                                 </div>
 
                                                                 <div className="flex flex-col w-64">
                                                                     <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="enablingOutcome" defaultValue={row.enablingOutcome}></textarea>
-                                                                    {formState?.enablingOutcomeError ? <span className='text-red-500 flex flex-wrap'>{formState.enablingOutcomeError} </span> : ''}
+                                                                    {editFormState?.enablingOutcomeError ? <span className='text-red-500 flex flex-wrap'>{editFormState.enablingOutcomeError} </span> : ''}
                                                                 </div>
 
                                                                 <div className="flex flex-col w-64">
                                                                     <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="material" defaultValue={row.material}></textarea>
-                                                                    {formState?.materialError ? <span className='text-red-500 flex flex-wrap'>{formState.materialError} </span> : ''}
+                                                                    {editFormState?.materialError ? <span className='text-red-500 flex flex-wrap'>{editFormState.materialError} </span> : ''}
                                                                 </div>
 
                                                                 <div className="flex flex-col w-64">
                                                                     <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="assessment" defaultValue={row.assessment}></textarea>
-                                                                    {formState?.assessmentError ? <span className='text-red-500 flex flex-wrap'>{formState.assessmentError} </span> : ''}
+                                                                    {editFormState?.assessmentError ? <span className='text-red-500 flex flex-wrap'>{editFormState.assessmentError} </span> : ''}
                                                                 </div>
 
                                                                 <div className="flex flex-col w-64">
                                                                     <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="notes" defaultValue={row.notes}></textarea>
-                                                                    {formState?.notesError ? <span className='text-red-500 flex flex-wrap'>{formState.notesError} </span> : ''}
+                                                                    {editFormState?.notesError ? <span className='text-red-500 flex flex-wrap'>{editFormState.notesError} </span> : ''}
                                                                 </div>
-                                                                <button type="submit">Save</button>
+                                                                <button type="submit" onClick={handleSubmit}>Save</button>
                                                                 <button type="button" onClick={() => setEditRowIndex(null)}>Cancel</button>
                                                             </form>
                                                         ) : <>
@@ -131,7 +141,14 @@ export default function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
                                                                 <input type="hidden" name="rowIndex" value={rowIndex} />
 
 
-                                                                <Image width={30} height={30} alt="Green pencil. Edit selected row" src='/images/icons/edit.png' onClick={() => toggleEdit(rowIndex)} />
+                                                                <Image
+                                                                    width={30}
+                                                                    height={30}
+                                                                    alt="Green pencil. Edit selected row"
+                                                                    src='/images/icons/edit.png'
+                                                                    onClick={() => toggleEdit(rowIndex)}
+                                                                />
+
                                                                 <button
                                                                     type="submit"
                                                                     formAction={deleteRow}

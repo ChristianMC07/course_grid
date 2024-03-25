@@ -171,7 +171,7 @@ export async function deleteRow(formData: FormData) {
     }
 }
 
-export async function editRow(formData: FormData) {
+export async function editRow(formState: ErrorMessage, formData: FormData) {
 
     let { userId } = auth();
     let courseID: string = formData.get('courseID') as string;
@@ -257,18 +257,33 @@ export async function editRow(formData: FormData) {
 
             if (updateResult.modifiedCount === 1) {
                 console.log("The row was updated successfully");
-                revalidatePath(`/home/courses/${courseID}/grids/${indexes.gridIndex}/view`);
+
+                const updatedFormState = {
+                    ...formState,
+                    resetKey: Date.now().toString(),
+                };
+
+                return updatedFormState;
+
+
+
             } else {
                 console.log("No changes were made");
             }
 
 
-        } catch {
+        } catch (error) {
+            console.error('Error updating row: ' + error);
 
         } finally {
+            revalidatePath(`/home/courses/${courseID}/grids/${indexes.gridIndex}/view`, 'page');
+            await mongoClient.close();
 
         }
 
+    } else {
+        console.log(editErrorMessages);
+        return editErrorMessages;
     }
 }
 
