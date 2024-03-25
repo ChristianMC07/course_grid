@@ -255,6 +255,13 @@ export async function editRow(formData: FormData) {
                 { $set: updateObject }
             );
 
+            if (updateResult.modifiedCount === 1) {
+                console.log("The row was updated successfully");
+                revalidatePath(`/home/courses/${courseID}/grids/${indexes.gridIndex}/view`);
+            } else {
+                console.log("No changes were made");
+            }
+
 
         } catch {
 
