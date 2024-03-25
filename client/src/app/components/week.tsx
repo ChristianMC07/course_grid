@@ -1,18 +1,19 @@
 'use client';
 import Image from "next/image";
 import { Grid, Week } from "@/tools/data.model";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
-import { createRow } from "@/actions/rowActions";
-import { useRef } from 'react';
+import { createRow, editRow } from "@/actions/rowActions";
 import { deleteRow } from "@/actions/rowActions";
+import Link from "next/link";
 
 interface WeekProps {
     gridInfo: Grid;
     courseID: string;
+    gridID: string;
 };
 
-export default function WeekComp({ gridInfo, courseID }: WeekProps) {
+export default async function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
 
     type ErrorMessage = {
         [key: string]: any;
@@ -20,13 +21,29 @@ export default function WeekComp({ gridInfo, courseID }: WeekProps) {
 
     const [visibleWeeks, setVisibleWeeks] = useState<{ [key: string]: boolean }>({});
 
+    const [editRowIndex, setEditRowIndex] = useState<null | number>(null);
+
+
     const toggleDropdown = (index: number) => {
         setVisibleWeeks(prev => ({ ...prev, [index]: !prev[index] }));
     };
 
+    const toggleEdit = (index: number) => {
+        setEditRowIndex(prevIndex => prevIndex === index ? null : index);
+    };
+
+    const formRef = React.useRef(null);
+
     const [formState, action] = useFormState<ErrorMessage, FormData>(createRow, new FormData());
 
+    const [editFormState, editAction] = useFormState<ErrorMessage, FormData>(editRow, new FormData());
 
+    const handleSubmit = async (event: any) => {
+        event.preventDefault();
+        const formData = new FormData(formRef.current!); // Use the form ref here
+        editAction(formData);
+        setEditRowIndex(null);
+    }
 
     return (
         <section>
@@ -63,31 +80,86 @@ export default function WeekComp({ gridInfo, courseID }: WeekProps) {
                                             {(week.rows && week.rows.length > 0) ? (
                                                 week.rows.map((row, rowIndex) => (
                                                     <div key={rowIndex} className="flex gap-x-4">
-                                                        <div className="w-28 p-4 border border-slate-400">{row.classID}</div>
-                                                        <div className="w-64 p-4 border border-slate-400 whitespace-pre text-wrap">{row.learningOutcome}</div>
-                                                        <div className="w-64 p-4 border border-slate-400 whitespace-pre text-wrap">
-                                                            {row.enablingOutcome}</div>
-                                                        <div className="w-64 p-4  border border-slate-400">{row.material}</div>
-                                                        <div className="w-64 p-4  border border-slate-400">{row.assessment}</div>
-                                                        <div className="w-64 p-4  border border-slate-400">{row.notes}</div>
+                                                        {editRowIndex === rowIndex ? (
+                                                            <form className="flex gap-x-4" key={editFormState?.resetKey} ref={formRef}>
+                                                                <input type="hidden" name="courseID" value={courseID} />
+                                                                <input type="hidden" name="gridName" value={gridInfo.gridName} />
+                                                                <input type="hidden" name="weekName" value={gridInfo.weeks![weekIndex].weekName} />
+                                                                <input type="hidden" name="rowIndex" value={rowIndex} />
 
-                                                        <form className="flex items-center gap-x-4">
+                                                                <div className="flex flex-col w-28">
+                                                                    <input
+                                                                        className="w-28 h-10 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline"
+                                                                        name="classID"
+                                                                        defaultValue={row.classID}
+                                                                    />
+                                                                    {editFormState?.classIDError ? <span className='text-red-500 flex flex-wrap'>{editFormState.classIDError} </span> : ''}
+                                                                </div>
 
-                                                            <input type="hidden" name="courseID" value={courseID} />
-                                                            <input type="hidden" name="gridName" value={gridInfo.gridName} />
-                                                            <input type="hidden" name="weekName" value={gridInfo.weeks![weekIndex].weekName} />
-                                                            <input type="hidden" name="rowIndex" value={rowIndex} />
+                                                                <div className="flex flex-col w-64">
+                                                                    <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="learningOutcome" defaultValue={row.learningOutcome}></textarea>
+                                                                    {editFormState?.learningOutcomeError ? <span className='text-red-500 flex flex-wrap'>{editFormState.learningOutcomeError} </span> : ''}
+                                                                </div>
+
+                                                                <div className="flex flex-col w-64">
+                                                                    <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="enablingOutcome" defaultValue={row.enablingOutcome}></textarea>
+                                                                    {editFormState?.enablingOutcomeError ? <span className='text-red-500 flex flex-wrap'>{editFormState.enablingOutcomeError} </span> : ''}
+                                                                </div>
+
+                                                                <div className="flex flex-col w-64">
+                                                                    <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="material" defaultValue={row.material}></textarea>
+                                                                    {editFormState?.materialError ? <span className='text-red-500 flex flex-wrap'>{editFormState.materialError} </span> : ''}
+                                                                </div>
+
+                                                                <div className="flex flex-col w-64">
+                                                                    <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="assessment" defaultValue={row.assessment}></textarea>
+                                                                    {editFormState?.assessmentError ? <span className='text-red-500 flex flex-wrap'>{editFormState.assessmentError} </span> : ''}
+                                                                </div>
+
+                                                                <div className="flex flex-col w-64">
+                                                                    <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="notes" defaultValue={row.notes}></textarea>
+                                                                    {editFormState?.notesError ? <span className='text-red-500 flex flex-wrap'>{editFormState.notesError} </span> : ''}
+                                                                </div>
+                                                                <button type="submit" onClick={handleSubmit}>Save</button>
+                                                                <button type="button" onClick={() => setEditRowIndex(null)}>Cancel</button>
+                                                            </form>
+                                                        ) : <>
+                                                            <div className="w-28 p-4 border border-slate-400">{row.classID}</div>
+                                                            <div className="w-64 p-4 border border-slate-400 whitespace-pre text-wrap">{row.learningOutcome}</div>
+                                                            <div className="w-64 p-4 border border-slate-400 whitespace-pre text-wrap">
+                                                                {row.enablingOutcome}</div>
+                                                            <div className="w-64 p-4  border border-slate-400">{row.material}</div>
+                                                            <div className="w-64 p-4  border border-slate-400">{row.assessment}</div>
+                                                            <div className="w-64 p-4  border border-slate-400">{row.notes}</div>
+
+                                                            <form className="flex items-center gap-x-4">
+
+                                                                <input type="hidden" name="courseID" value={courseID} />
+                                                                <input type="hidden" name="gridName" value={gridInfo.gridName} />
+                                                                <input type="hidden" name="gridID" value={gridID} />
+                                                                <input type="hidden" name="weekName" value={gridInfo.weeks![weekIndex].weekName} />
+                                                                <input type="hidden" name="rowIndex" value={rowIndex} />
 
 
-                                                            <button type="submit"><Image width={30} height={30} alt="Green pencil. Edit selected row" src='/images/icons/edit.png' /></button>
-                                                            <button
-                                                                type="submit"
-                                                                formAction={deleteRow}
-                                                            >
-                                                                <Image width={30} height={30} alt="Red trash bin to delete week" src='/images/icons/delete-128.png' />
-                                                            </button>
-                                                        </form>
-                                                        {/* Additional row cells */}
+                                                                <Image
+                                                                    width={30}
+                                                                    height={30}
+                                                                    alt="Green pencil. Edit selected row"
+                                                                    src='/images/icons/edit.png'
+                                                                    onClick={() => toggleEdit(rowIndex)}
+                                                                />
+
+                                                                <button
+                                                                    type="submit"
+                                                                    formAction={deleteRow}
+                                                                >
+                                                                    <Image width={30} height={30} alt="Red trash bin to delete week" src='/images/icons/delete-128.png' />
+                                                                </button>
+                                                            </form>
+                                                            {/* Additional row cells */}
+
+
+                                                        </>}
                                                     </div>
                                                 ))
                                             ) : ''
