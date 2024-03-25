@@ -45,8 +45,8 @@ export async function createRow(formState: ErrorMessage, formData: FormData) {
     let assessment: any = formData.get('assessment');
     let notes: any = formData.get('notes');
 
-    if (classID.length > 10) {
-        errorMessages.classIDError = `Class ID max characters = 10`
+    if (classID.length > 10 || !classID) {
+        errorMessages.classIDError = `Class ID can't be empty and max characters = 10`
     } else {
         classID = sanitize(classID);
     }
@@ -167,6 +167,91 @@ export async function deleteRow(formData: FormData) {
 
     } finally {
         await mongoClient.close();
+
+    }
+}
+
+export async function editRow(formData: FormData) {
+
+    let { userId } = auth();
+    let courseID: string = formData.get('courseID') as string;
+    let gridName: string = formData.get('gridName') as string;
+    let weekName: string = formData.get('weekName') as string;
+    let rowIndex: number = parseInt(formData.get('rowIndex') as string);
+
+    let editErrorMessages: ErrorMessage = {
+        classIDError: '',
+        learningOutcomeError: '',
+        enablingOutcomeError: '',
+        materialError: '',
+        assessmentError: '',
+        notesError: '',
+    }
+
+    let indexes = await findIndexes(userId!, courseID, gridName, weekName);
+
+
+    let classID: any = formData.get('classID');
+    let learningOutcome: any = formData.get('learningOutcome');
+    let enablingOutcome: any = formData.get('enablingOutcome');
+    let material: any = formData.get('material');
+    let assessment: any = formData.get('assessment');
+    let notes: any = formData.get('notes');
+
+    if (classID.length > 10 || !classID) {
+        editErrorMessages.classIDError = `Class ID can't be empty and max characters = 10`
+    } else {
+        classID = sanitize(classID);
+    }
+
+    if (learningOutcome.length > 255) {
+        editErrorMessages.learningOutcomeError = `Learning Outcome max characters = 255`
+    } else {
+        learningOutcome = sanitize(learningOutcome);
+    }
+
+    if (enablingOutcome.length > 255) {
+        editErrorMessages.enablingOutcomeError = `Enabling Outcome max characters = 255`
+    } else {
+        enablingOutcome = sanitize(enablingOutcome);
+    }
+
+    if (material.length > 255) {
+        editErrorMessages.materialError = `Material max characters = 255`
+    } else {
+        material = sanitize(material);
+    }
+
+    if (assessment.length > 255) {
+        editErrorMessages.assessmentError = `Assessment max characters = 255`
+    } else {
+        assessment = sanitize(material);
+    }
+
+    if (notes.length > 255) {
+        editErrorMessages.notesError = `Notes max characters = 255`
+    } else {
+        notes = sanitize(notes);
+    }
+
+    const updatePath = `courses.${indexes.courseIndex}.grids.${indexes.gridIndex}.weeks.${indexes.weekIndex}.rows.${rowIndex}`;
+
+
+    if (Object.values(editErrorMessages).join('') === '') {
+        try {
+            await mongoClient.connect();
+            const accountsCollection = mongoClient.db(MONGO_DB_NAME).collection<User>(MONGO_COLLECTION_ACCOUNT);
+
+
+
+
+
+
+        } catch {
+
+        } finally {
+
+        }
 
     }
 }
