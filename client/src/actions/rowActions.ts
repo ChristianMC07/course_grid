@@ -242,8 +242,13 @@ export async function editRow(formData: FormData) {
             await mongoClient.connect();
             const accountsCollection = mongoClient.db(MONGO_DB_NAME).collection<User>(MONGO_COLLECTION_ACCOUNT);
 
-
-
+            let updateObject: Record<string, string> = {};
+            updateObject[`${updatePath}.classID`] = classID;
+            updateObject[`${updatePath}.learningOutcome`] = learningOutcome;
+            updateObject[`${updatePath}.enablingOutcome`] = enablingOutcome;
+            updateObject[`${updatePath}.material`] = material;
+            updateObject[`${updatePath}.assessment`] = assessment;
+            updateObject[`${updatePath}.notes`] = notes;
 
 
 
