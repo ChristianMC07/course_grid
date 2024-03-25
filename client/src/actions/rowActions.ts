@@ -250,6 +250,10 @@ export async function editRow(formData: FormData) {
             updateObject[`${updatePath}.assessment`] = assessment;
             updateObject[`${updatePath}.notes`] = notes;
 
+            const updateResult: UpdateResult = await accountsCollection.updateOne(
+                { _id: userId! },
+                { $set: updateObject }
+            );
 
 
         } catch {
