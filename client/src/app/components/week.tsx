@@ -46,15 +46,15 @@ export default async function WeekComp({ gridInfo, courseID, gridID }: WeekProps
     }
 
     return (
-        <section>
+        <section className="pt-8">
             {gridInfo.weeks && gridInfo.weeks.length > 0 ?
                 gridInfo.weeks.map((week, weekIndex) => (
                     <div key={weekIndex} className="flex flex-col mb-5">
                         <div className="flex justify-between bg-black text-white p-4 gap-4">
                             <h2 className="text-2xl font-black">{week.weekName}</h2>
                             <div className="flex gap-4">
-                                <Image width={30} height={30} alt="Red trash bin to delete week" src='/images/icons/delete-128.png' />
-                                <Image width={40} height={40} alt="Show more button" src='/images/icons/chevron.png' onClick={() => toggleDropdown(weekIndex)} />
+                                <Image width={30} height={30} alt="Red trash bin to delete week" src='/icons/delete-128.png' />
+                                <Image width={40} height={40} alt="Show more button" src='/icons/chevron.png' onClick={() => toggleDropdown(weekIndex)} />
                             </div>
                         </div>
                         {/* Adjustments for horizontal scrolling */}
@@ -120,17 +120,21 @@ export default async function WeekComp({ gridInfo, courseID, gridID }: WeekProps
                                                                     <textarea className="w-64 h-64 shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:shadow-outline bg-white" name="notes" defaultValue={row.notes}></textarea>
                                                                     {editFormState?.notesError ? <span className='text-red-500 flex flex-wrap'>{editFormState.notesError} </span> : ''}
                                                                 </div>
-                                                                <button type="submit" onClick={handleSubmit}>Save</button>
-                                                                <button type="button" onClick={() => setEditRowIndex(null)}>Cancel</button>
+                                                                <div className="flex items-center gap-x-4">
+                                                                    <button type="submit" onClick={handleSubmit}>
+                                                                        <Image width={30} height={30} alt="Red thrash bin to delete week" src='/icons/save.png' />
+                                                                    </button>
+                                                                    <button type="button" onClick={() => setEditRowIndex(null)}><Image width={30} height={30} alt="Red thrash bin to delete week" src='/icons/cancel.png' /></button>.
+                                                                </div>
                                                             </form>
                                                         ) : <>
                                                             <div className="w-28 p-4 border border-slate-400">{row.classID}</div>
                                                             <div className="w-64 p-4 border border-slate-400 whitespace-pre text-wrap">{row.learningOutcome}</div>
                                                             <div className="w-64 p-4 border border-slate-400 whitespace-pre text-wrap">
                                                                 {row.enablingOutcome}</div>
-                                                            <div className="w-64 p-4  border border-slate-400">{row.material}</div>
-                                                            <div className="w-64 p-4  border border-slate-400">{row.assessment}</div>
-                                                            <div className="w-64 p-4  border border-slate-400">{row.notes}</div>
+                                                            <div className="w-64 p-4  border border-slate-400 whitespace-pre text-wrap">{row.material}</div>
+                                                            <div className="w-64 p-4  border border-slate-400 whitespace-pre text-wrap">{row.assessment}</div>
+                                                            <div className="w-64 p-4  border border-slate-400 whitespace-pre text-wrap">{row.notes}</div>
 
                                                             <form className="flex items-center gap-x-4">
 
@@ -145,15 +149,16 @@ export default async function WeekComp({ gridInfo, courseID, gridID }: WeekProps
                                                                     width={30}
                                                                     height={30}
                                                                     alt="Green pencil. Edit selected row"
-                                                                    src='/images/icons/edit.png'
+                                                                    src='/icons/edit.png'
                                                                     onClick={() => toggleEdit(rowIndex)}
+                                                                    className="cursor-pointer"
                                                                 />
 
                                                                 <button
                                                                     type="submit"
                                                                     formAction={deleteRow}
                                                                 >
-                                                                    <Image width={30} height={30} alt="Red trash bin to delete week" src='/images/icons/delete-128.png' />
+                                                                    <Image width={30} height={30} alt="Red thrash bin to delete week" src='/icons/delete-128.png' />
                                                                 </button>
                                                             </form>
                                                             {/* Additional row cells */}
@@ -208,7 +213,7 @@ export default async function WeekComp({ gridInfo, courseID, gridID }: WeekProps
                                                 </div>
 
                                                 <div className="flex items-center gap-x-4 w-28">
-                                                    <button type="submit"><Image src={`/images/icons/plus.png`} width={30} height={30} alt="Plus button to add new row"></Image></button>
+                                                    <button type="submit"><Image src={`/icons/plus.png`} width={30} height={30} alt="Plus button to add new row"></Image></button>
                                                 </div>
                                             </form>
                                         </div>
