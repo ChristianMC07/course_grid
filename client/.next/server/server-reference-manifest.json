@@ -1,0 +1,94 @@
+{
+  "node": {
+    "46ef3e5a6bb2e30b9265d84b842ae4bdb8878db2": {
+      "workers": {
+        "app/home/courses/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fusr%2Fapp%2Fclient%2Fsrc%2Factions%2FthisUserCourses.ts%22%2C%5B%22thisUserCourses%22%5D%5D%5D&__client_imported__=!"
+      },
+      "layer": {
+        "app/home/courses/page": "rsc"
+      }
+    },
+    "cc1c9e03f7c6430e1c55e9affadfbc638aa5e145": {
+      "workers": {
+        "app/home/courses/create/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fusr%2Fapp%2Fclient%2Fsrc%2Factions%2FcreateCourse.ts%22%2C%5B%22createCourse%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/home/courses/create/page": "action-browser"
+      }
+    },
+    "b53e0779b8de1589a38afd6b2d7c26c2354b3f8f": {
+      "workers": {
+        "app/home/courses/[id]/grids/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fusr%2Fapp%2Fclient%2Fsrc%2Factions%2FthisUserGrids.ts%22%2C%5B%22thisCourseGrids%22%5D%5D%5D&__client_imported__=!"
+      },
+      "layer": {
+        "app/home/courses/[id]/grids/page": "rsc"
+      }
+    },
+    "c44540603c04cc1da7ade20aacfe46c0ce657dc3": {
+      "workers": {
+        "app/home/courses/[id]/grids/create/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fusr%2Fapp%2Fclient%2Fsrc%2Factions%2FcreateGrid.ts%22%2C%5B%22createGrid%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/home/courses/[id]/grids/create/page": "action-browser"
+      }
+    },
+    "b70ff2577bde5ac693bfab1d8d9f0e48f97e1d42": {
+      "workers": {
+        "app/home/courses/[id]/grids/[index]/view/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fusr%2Fapp%2Fclient%2Fsrc%2Factions%2FgridWeeks.ts%22%2C%5B%22gridWeeks%22%5D%5D%5D&__client_imported__=!"
+      },
+      "layer": {
+        "app/home/courses/[id]/grids/[index]/view/page": "rsc"
+      }
+    },
+    "12a5e85350b0ec582d4d7e7061049638bf5cbe90": {
+      "workers": {
+        "app/home/courses/[id]/grids/[index]/view/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fusr%2Fapp%2Fclient%2Fsrc%2Factions%2FrowActions.ts%22%2C%5B%22createRow%22%2C%22deleteRow%22%2C%22editRow%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/home/courses/[id]/grids/[index]/view/page": "action-browser"
+      }
+    },
+    "569808ad85651c1b96d70cd9d397957f76594384": {
+      "workers": {
+        "app/home/courses/[id]/grids/[index]/view/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fusr%2Fapp%2Fclient%2Fsrc%2Factions%2FrowActions.ts%22%2C%5B%22createRow%22%2C%22deleteRow%22%2C%22editRow%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/home/courses/[id]/grids/[index]/view/page": "action-browser"
+      }
+    },
+    "fa3b26c44213d22543500c77ff6289dcc5b4b870": {
+      "workers": {
+        "app/home/courses/[id]/grids/[index]/view/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fusr%2Fapp%2Fclient%2Fsrc%2Factions%2FrowActions.ts%22%2C%5B%22createRow%22%2C%22deleteRow%22%2C%22editRow%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/home/courses/[id]/grids/[index]/view/page": "action-browser"
+      }
+    },
+    "bfb7cf41a656652fc9720e0f61262ee56b1f88ea": {
+      "workers": {
+        "app/home/courses/create/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fusr%2Fapp%2Fclient%2Fsrc%2Factions%2FcreateCourse.ts%22%2C%5B%22createCourse%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/home/courses/create/page": "action-browser"
+      }
+    },
+    "4bc76b33974ec09dd9e008cd4584397d48afae36": {
+      "workers": {
+        "app/home/courses/[id]/delete/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fusr%2Fapp%2Fclient%2Fsrc%2Factions%2FfetchCourse.ts%22%2C%5B%22fetchCourse%22%5D%5D%2C%5B%22%2Fusr%2Fapp%2Fclient%2Fsrc%2Factions%2FdeleteCourse.ts%22%2C%5B%22deleteCourse%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/home/courses/[id]/delete/page": "action-browser"
+      }
+    },
+    "81052560e22be4b45b389fa7a33d3287849de0af": {
+      "workers": {
+        "app/home/courses/[id]/delete/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fusr%2Fapp%2Fclient%2Fsrc%2Factions%2FfetchCourse.ts%22%2C%5B%22fetchCourse%22%5D%5D%2C%5B%22%2Fusr%2Fapp%2Fclient%2Fsrc%2Factions%2FdeleteCourse.ts%22%2C%5B%22deleteCourse%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/home/courses/[id]/delete/page": "action-browser"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "BL2tMAv92HtLzbZTXj/cBmt9llyhiv+shhTr7HwLUL8="
+}
