@@ -759,9 +759,6 @@ video {
 .gap-y-4 {
   row-gap: 1rem;
 }
-.gap-y-2 {
-  row-gap: 0.5rem;
-}
 .space-y-4 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
@@ -903,9 +900,6 @@ video {
 }
 .pt-10 {
   padding-top: 2.5rem;
-}
-.pt-4 {
-  padding-top: 1rem;
 }
 .pt-8 {
   padding-top: 2rem;

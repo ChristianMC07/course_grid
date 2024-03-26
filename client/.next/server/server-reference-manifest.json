@@ -63,32 +63,8 @@
       "layer": {
         "app/home/courses/[id]/grids/[index]/view/page": "action-browser"
       }
-    },
-    "bfb7cf41a656652fc9720e0f61262ee56b1f88ea": {
-      "workers": {
-        "app/home/courses/create/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fusr%2Fapp%2Fclient%2Fsrc%2Factions%2FcreateCourse.ts%22%2C%5B%22createCourse%22%5D%5D%5D&__client_imported__=true!"
-      },
-      "layer": {
-        "app/home/courses/create/page": "action-browser"
-      }
-    },
-    "4bc76b33974ec09dd9e008cd4584397d48afae36": {
-      "workers": {
-        "app/home/courses/[id]/delete/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fusr%2Fapp%2Fclient%2Fsrc%2Factions%2FfetchCourse.ts%22%2C%5B%22fetchCourse%22%5D%5D%2C%5B%22%2Fusr%2Fapp%2Fclient%2Fsrc%2Factions%2FdeleteCourse.ts%22%2C%5B%22deleteCourse%22%5D%5D%5D&__client_imported__=true!"
-      },
-      "layer": {
-        "app/home/courses/[id]/delete/page": "action-browser"
-      }
-    },
-    "81052560e22be4b45b389fa7a33d3287849de0af": {
-      "workers": {
-        "app/home/courses/[id]/delete/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fusr%2Fapp%2Fclient%2Fsrc%2Factions%2FfetchCourse.ts%22%2C%5B%22fetchCourse%22%5D%5D%2C%5B%22%2Fusr%2Fapp%2Fclient%2Fsrc%2Factions%2FdeleteCourse.ts%22%2C%5B%22deleteCourse%22%5D%5D%5D&__client_imported__=true!"
-      },
-      "layer": {
-        "app/home/courses/[id]/delete/page": "action-browser"
-      }
     }
   },
   "edge": {},
-  "encryptionKey": "BL2tMAv92HtLzbZTXj/cBmt9llyhiv+shhTr7HwLUL8="
+  "encryptionKey": "b3h+OijqrW2T0XL2AzmgRA1dFaZvyfNFIQnUCxncRnk="
 }
