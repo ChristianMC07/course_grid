@@ -5,7 +5,7 @@ import { MongoClient } from "mongodb";
 import { auth } from '@clerk/nextjs'; // Import auth system to get user ID
 import { User } from "@/tools/data.model";
 
-const MONGO_URL = "mongodb://mongo:27017/";
+const MONGO_URL = process.env.MONGO_URL || "mongodb://mongo:27017/";
 const MONGO_DB_NAME = "dbGrids";
 const MONGO_COLLECTION_ACCOUNT = "accounts";
 
