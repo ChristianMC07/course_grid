@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Nav from "./components/nav";
+import ErrorBoundary from "./errorBoundary";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,9 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <Nav />
-          {children}
+          <ErrorBoundary>
+            {children}
+          </ErrorBoundary>
         </body>
       </html>
     </ClerkProvider>
