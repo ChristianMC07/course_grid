@@ -88,6 +88,7 @@ export async function createCourse(formState: ErrorMessage, formData: FormData) 
                             courseName: courseName,
                             courseDescription: courseDescription,
                             coursePhoto: coursePhotoName,
+                            isSubmitting: undefined
                         }
 
                     ]
@@ -106,6 +107,7 @@ export async function createCourse(formState: ErrorMessage, formData: FormData) 
                                 courseName: courseName,
                                 courseDescription: courseDescription,
                                 coursePhoto: coursePhotoName,
+                                isSubmitting: undefined,
                             }
                         }
                     }
