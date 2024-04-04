@@ -6,6 +6,7 @@ import sanitize from "sanitize-html";
 import { auth } from '@clerk/nextjs';
 import { createImage } from '@/tools/Toolkit';
 import { Accounts, User } from "@/tools/data.model";
+import { revalidatePath } from "next/cache";
 
 const MONGO_URL: string = process.env.MONGO_URL || "mongodb://mongo:27017/";
 const MONGO_DB_NAME: string = "dbGrids";
@@ -129,23 +130,19 @@ export async function createCourse(formState: ErrorMessage, formData: FormData) 
                 updateResult.modifiedCount === 1 ? console.log("The course was added") : console.log('No luck');
             }
 
+            revalidatePath(`/home/courses`);
+
 
 
         } catch (error) {
-            console.log('This is the error and will appear in the server : ' + error)
+            console.log('This is the error and will appear in the server : ' + error);
+            revalidatePath(`/home/courses`);
 
         } finally {
-
-            mongoClient.close();
+            redirect('/home/courses/');
         }
-
-        redirect('/home/courses/');
-
 
     } else {
         return errorMessages;
     }
-
-
-
 }
