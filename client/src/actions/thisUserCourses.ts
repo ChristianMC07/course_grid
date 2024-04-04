@@ -4,6 +4,7 @@ import { User } from '@/tools/data.model';
 import { auth } from '@clerk/nextjs';
 
 import { MongoClient } from "mongodb"
+import { revalidatePath } from 'next/cache';
 
 const MONGO_URL: string = process.env.MONGO_URL || "mongodb://mongo:27017/";
 const MONGO_DB_NAME: string = "dbGrids";
@@ -21,7 +22,6 @@ export async function thisUserCourses() {
 
         const userInfo = await accountsCollection.findOne({ _id: userId! });
 
-
         return userInfo;
 
 
@@ -30,7 +30,7 @@ export async function thisUserCourses() {
 
     } finally {
 
-        await mongoClient.close();
+        revalidatePath('/home/courses');
 
     }
 }
