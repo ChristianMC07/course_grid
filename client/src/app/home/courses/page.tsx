@@ -4,7 +4,7 @@ import { thisUserCourses } from '@/actions/thisUserCourses';
 import Image from 'next/image';
 
 export default async function Courses() {
-  const userInfo = await thisUserCourses();
+  let userInfo = await thisUserCourses();
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -24,7 +24,7 @@ export default async function Courses() {
                   src={`/images/${course.coursePhoto}`}
                   layout="fill"
                   objectFit="cover"
-                  alt={`Course image for ${course.courseName}`} 
+                  alt={`Course image for ${course.courseName}`}
                 />
               </div>
               <div className="p-5">
@@ -48,7 +48,7 @@ export default async function Courses() {
             </div>
           ))}
         </div>
-        
+
         {userInfo && userInfo.courses && userInfo.courses.length === 0 && (
           <div className="text-center py-10">
             <p className="text-gray-600 mb-4">Looks like you have no courses yet.</p>
