@@ -1,8 +1,18 @@
 {
-  "/home/courses/[id]/grids/page": "app/home/courses/[id]/grids/page.js",
-  "/home/courses/[id]/grids/[index]/view/page": "app/home/courses/[id]/grids/[index]/view/page.js",
-  "/home/courses/page": "app/home/courses/page.js",
-  "/home/courses/create/page": "app/home/courses/create/page.js",
+  "/_not-found": "app/_not-found.js",
+  "/api/webhooks/user/route": "app/api/webhooks/user/route.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/home/courses/[id]/delete/page": "app/home/courses/[id]/delete/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js"
+  "/home/courses/[id]/edit/page": "app/home/courses/[id]/edit/page.js",
+  "/home/courses/[id]/grids/[index]/delete/page": "app/home/courses/[id]/grids/[index]/delete/page.js",
+  "/home/courses/[id]/grids/[index]/edit/page": "app/home/courses/[id]/grids/[index]/edit/page.js",
+  "/home/courses/[id]/grids/[index]/view/page": "app/home/courses/[id]/grids/[index]/view/page.js",
+  "/home/courses/[id]/grids/create/page": "app/home/courses/[id]/grids/create/page.js",
+  "/home/courses/[id]/grids/page": "app/home/courses/[id]/grids/page.js",
+  "/home/courses/create/page": "app/home/courses/create/page.js",
+  "/home/courses/page": "app/home/courses/page.js",
+  "/home/page": "app/home/page.js",
+  "/page": "app/page.js",
+  "/sign-in/[[...sign-in]]/page": "app/sign-in/[[...sign-in]]/page.js",
+  "/sign-up/[[...sign-up]]/page": "app/sign-up/[[...sign-up]]/page.js"
 }
