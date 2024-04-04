@@ -1,8 +1,8 @@
 {
-  "/home/courses/page": "app/home/courses/page.js",
-  "/home/page": "app/home/page.js",
-  "/home/courses/create/page": "app/home/courses/create/page.js",
   "/home/courses/[id]/grids/page": "app/home/courses/[id]/grids/page.js",
-  "/home/courses/[id]/grids/create/page": "app/home/courses/[id]/grids/create/page.js",
-  "/home/courses/[id]/grids/[index]/view/page": "app/home/courses/[id]/grids/[index]/view/page.js"
+  "/home/courses/[id]/grids/[index]/view/page": "app/home/courses/[id]/grids/[index]/view/page.js",
+  "/home/courses/page": "app/home/courses/page.js",
+  "/home/courses/create/page": "app/home/courses/create/page.js",
+  "/home/courses/[id]/delete/page": "app/home/courses/[id]/delete/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js"
 }
