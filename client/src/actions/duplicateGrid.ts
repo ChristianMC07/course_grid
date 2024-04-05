@@ -1,3 +1,5 @@
+'use server';
+
 // actions/duplicateGrid.ts
 import { MongoClient } from "mongodb";
 import { auth } from '@clerk/nextjs';

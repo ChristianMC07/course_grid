@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Grid } from '@/tools/data.model';
 import { thisCourseGrids } from '@/actions/thisUserGrids';
-import { archiveGrid } from '@/actions/archiveGrid'; // Ensure you have this action implemented
+import { archiveGrid } from '@/actions/archiveGrid'; 
+import { duplicateGrid } from '@/actions/duplicateGrid';
 
 interface GridsPageProps {
   params: {
@@ -38,6 +39,16 @@ const GridsPage: React.FC<GridsPageProps> = ({ params }) => {
         alert("Failed to archive the grid.");
       }
     }
+  };
+
+  const handleDuplicateGrid = async (courseID: string, gridIndex: number) => {
+      const success = await duplicateGrid(courseID, gridIndex);
+      if (success) {
+          alert('Grid duplicated successfully.');
+          // Refresh the list of grids or navigate as needed
+      } else {
+          alert('Failed to duplicate the grid.');
+      }
   };
 
   return (
@@ -74,10 +85,12 @@ const GridsPage: React.FC<GridsPageProps> = ({ params }) => {
             {/* Container for other buttons */}
             <div className="flex flex-col gap-2">
               <div className="flex justify-end gap-2">
-
-                <Link href={`/home/courses/${params.id}/grids/${index}/duplicate`} className="text-green-500 hover:text-green-700 transition-colors duration-300 px-3 py-1 rounded border border-green-500 hover:border-green-700">
-                  Duplicate
-                </Link>
+              <button
+                onClick={() => handleDuplicateGrid(params.id, index)}
+                className="text-green-500 hover:text-green-700 transition-colors duration-300 px-3 py-1 rounded border border-green-500 hover:border-green-700"
+              >
+                Duplicate
+              </button>
                 <button
                     onClick={() => handleArchiveGrid(index)}
                     className="text-yellow-500 hover:text-yellow-700 transition-colors duration-300 px-3 py-1 rounded border border-yellow-500 hover:border-yellow-700"
