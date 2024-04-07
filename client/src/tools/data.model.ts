@@ -22,7 +22,10 @@ export interface Course {
 }
 
 export interface Grid {
+    _id?: string;
     gridName: string;
+    archived?: boolean;
+    archivedAt?: string;
     weeks?: Week[];
 }
 

@@ -1,4 +1,4 @@
-// Assuming the URL structure is /home/courses/[courseId]/grids/[gridIndex]/edit
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
