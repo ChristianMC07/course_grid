@@ -40,7 +40,7 @@ export default function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
 
     const handleSubmit = async (event: any) => {
         event.preventDefault();
-        const formData = new FormData(formRef.current!); // Use the form ref here
+        const formData = new FormData(formRef.current!);
         editAction(formData);
         setEditRowIndex(null);
     }
