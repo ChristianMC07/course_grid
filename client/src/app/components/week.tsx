@@ -13,7 +13,7 @@ interface WeekProps {
     gridID: string;
 };
 
-export default async function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
+export default function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
 
     type ErrorMessage = {
         [key: string]: any;
