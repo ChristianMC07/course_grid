@@ -3,8 +3,7 @@ import Image from "next/image";
 import { Grid, Week } from "@/tools/data.model";
 import React, { useEffect, useState } from 'react';
 import { useFormState } from 'react-dom';
-import { createRow, editRow } from "@/actions/rowActions";
-import { deleteRow } from "@/actions/rowActions";
+import { createRow, editRow, deleteRow, deleteWeek } from "@/actions/rowActions";
 import Link from "next/link";
 
 interface WeekProps {
@@ -45,6 +44,13 @@ export default function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
         setEditRowIndex(null);
     }
 
+    const handleDeleteWeek = async (courseID: string, gridName: string, weekName: string, event: any) => {
+        event.preventDefault();
+        await deleteWeek(courseID, gridName, weekName);
+
+
+    }
+
     return (
         <section className="pt-8">
             {gridInfo.weeks && gridInfo.weeks.length > 0 ?
@@ -53,7 +59,7 @@ export default function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
                         <div className="flex justify-between bg-black text-white p-4 gap-4">
                             <h2 className="text-2xl font-black">{week.weekName}</h2>
                             <div className="flex gap-4">
-                                <Image width={30} height={30} alt="Red trash bin to delete week" src='/icons/delete-128.png' />
+                                <Image width={30} height={30} alt="Red trash bin to delete week" src='/icons/delete-128.png' onClick={(event) => handleDeleteWeek(courseID, gridInfo.gridName, week.weekName, event)} />
                                 <Image width={40} height={40} alt="Show more button" src='/icons/chevron.png' onClick={() => toggleDropdown(weekIndex)} />
                             </div>
                         </div>
