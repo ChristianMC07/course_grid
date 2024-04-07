@@ -277,8 +277,6 @@ export async function editRow(formState: ErrorMessage, formData: FormData) {
 
         } finally {
             revalidatePath(`/home/courses/${courseID}/grids/${indexes.gridIndex}/view`, 'page');
-            await mongoClient.close();
-
         }
 
     } else {

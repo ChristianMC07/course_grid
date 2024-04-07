@@ -46,7 +46,7 @@ export async function gridWeeks(codeID: string, index: string) {
         throw error;
     }
     finally {
-        await mongoClient.close();
+        // await mongoClient.close();
 
     }
 
