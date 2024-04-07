@@ -5,18 +5,18 @@ import { MongoClient } from "mongodb";
 import { User, Grid } from "@/tools/data.model";
 import { auth } from '@clerk/nextjs';
 
-const MONGO_URL: string = "mongodb://mongo:27017/";
+const MONGO_URL: string = process.env.MONGO_URL || "mongodb://mongo:27017/";
 const MONGO_DB_NAME: string = "dbGrids";
 const MONGO_COLLECTION_ACCOUNT: string = "accounts";
 
 const mongoClient = new MongoClient(MONGO_URL);
 
 export async function archivedGridWeeks(courseID: string, gridIndex: number): Promise<Grid | null> {
-    const userId = auth().userId;
-    if (!userId) {
-      console.log("User ID is null");
-      return null;
-    }
+  const userId = auth().userId;
+  if (!userId) {
+    console.log("User ID is null");
+    return null;
+  }
 
   try {
     await mongoClient.connect();

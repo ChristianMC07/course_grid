@@ -13,7 +13,7 @@ export interface User {
 }
 
 export interface Course {
-    isSubmitting: boolean | undefined;
+    isSubmitting?: boolean | undefined;
     courseID: string;
     courseName: string
     courseDescription: string;
