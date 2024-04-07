@@ -45,8 +45,14 @@ export default function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
     }
 
     const handleDeleteWeek = async (courseID: string, gridName: string, weekName: string, event: any) => {
-        event.preventDefault();
-        await deleteWeek(courseID, gridName, weekName);
+        const confirmed = window.confirm(`Are you sure you want to delete the ${gridName}?`);
+        if (confirmed) {
+            event.preventDefault();
+            await deleteWeek(courseID, gridName, weekName);
+            alert(`${weekName} successfully deleted`);
+        } else {
+            alert(`${weekName} not deleted`);
+        }
 
 
     }
