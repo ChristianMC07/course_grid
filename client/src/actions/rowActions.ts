@@ -265,8 +265,6 @@ export async function editRow(formState: ErrorMessage, formData: FormData) {
 
                 return updatedFormState;
 
-
-
             } else {
                 console.log("No changes were made");
             }
@@ -283,6 +281,37 @@ export async function editRow(formState: ErrorMessage, formData: FormData) {
         console.log(editErrorMessages);
         return editErrorMessages;
     }
+}
+
+export async function deleteWeek(courseID: string, gridName: string, weekName: string) {
+    let { userId } = auth();
+
+    const indexes = await findIndexes(userId!, courseID, gridName, weekName);
+
+    const deletePath = `courses.${indexes.courseIndex}.grids.${indexes.gridIndex}.weeks.${indexes.weekIndex}`;
+
+    try {
+        await mongoClient.connect();
+
+        const accountsCollection = mongoClient.db(MONGO_DB_NAME).collection<User>(MONGO_COLLECTION_ACCOUNT);
+
+        //deleting a specific week
+
+        const updatedResult: UpdateResult = await accountsCollection.updateOne(
+            { _id: userId! },
+            { $pull: { [deletePath]: { $eq: indexes.weekIndex } } }
+        )
+
+        updatedResult.modifiedCount === 1 ? console.log('Week successfully deleted') : console.log('Could not delete the week');
+
+
+        revalidatePath(`/home/courses/${courseID}/grids/${indexes.gridIndex}/view`);
+
+    } catch (error) {
+        console.error('Error deleting week: ' + error);
+
+    }
+
 }
 
 async function findIndexes(userId: string, courseID: string, gridName: string, weekName: string) {
