@@ -288,7 +288,7 @@ export async function deleteWeek(courseID: string, gridName: string, weekName: s
 
     const indexes = await findIndexes(userId!, courseID, gridName, weekName);
 
-    const deletePath = `courses.${indexes.courseIndex}.grids.${indexes.gridIndex}.weeks.${indexes.weekIndex}`;
+    const deletePath = `courses.${indexes.courseIndex}.grids.${indexes.gridIndex}.weeks`;
 
     try {
         await mongoClient.connect();
@@ -299,7 +299,7 @@ export async function deleteWeek(courseID: string, gridName: string, weekName: s
 
         const updatedResult: UpdateResult = await accountsCollection.updateOne(
             { _id: userId! },
-            { $pull: { [deletePath]: { $eq: indexes.weekIndex } } }
+            { $pull: { [deletePath]: { weekName: weekName } } }
         )
 
         updatedResult.modifiedCount === 1 ? console.log('Week successfully deleted') : console.log('Could not delete the week');
