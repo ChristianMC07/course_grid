@@ -64,7 +64,7 @@ const GridsPage: React.FC<GridsPageProps> = ({ params }) => {
         </div>
       </div>
       <div className="mb-10">
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
           <h1 className="text-3xl font-bold text-gray-800">{params.id} - Grids</h1>
           <div className="flex gap-4">
             <Link href={`/home/courses/${params.id}/grids/create`} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
