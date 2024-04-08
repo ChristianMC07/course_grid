@@ -10,10 +10,11 @@ export default async function Courses() {
   return (
     <>
       <div className=' bg-gray-100 pt-8 pb-4 pl-10'>
-        <div className="flex text-blue-500 hover:text-blue-700">
-          <Link href="/home">
+        <div className="flex gap-x-2 items-center">
+          <Link className='text-blue-500 hover:text-blue-700 pb-1' href="/home">
             <HomeIcon className="fill-current h-6 w-6" />
           </Link>
+          <span>/</span>
         </div>
       </div>
       <div className="min-h-screen bg-gray-100">
