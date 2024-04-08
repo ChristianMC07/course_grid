@@ -17,7 +17,7 @@ export default async function ViewGrids(props: ViewGridsProps) {
     const getAllWeekInfo = await gridWeeks(props.params.id, props.params.index) as Grid;
 
     return (
-        <div className="min-h-[85vh] bg-gray-100 px-10 pt-10">
+        <div className="min-h-[85vh] bg-gray-100 px-10 pt-8">
 
             <div className="flex items-center gap-x-2 pb-4">
                 <Link className='text-blue-700 hover:text-blue-500 pb-1' href="/home">
