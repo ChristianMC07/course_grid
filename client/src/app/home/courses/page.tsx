@@ -18,14 +18,14 @@ export default async function Courses() {
       </div>
       <div className="min-h-screen bg-gray-100">
         <main className="px-10">
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex flex-wrap justify-between items-center mb-6 gap-3">
             <h1 className="text-3xl font-bold text-gray-800">Your Courses</h1>
             <Link href="/home/courses/create" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               + Add Course
             </Link>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-8">
             {userInfo?.courses?.map((course, index) => (
               <div key={index} className="bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden">
                 <div className="h-48 w-full relative">
