@@ -32,6 +32,7 @@ export default function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
     };
 
     const formRef = React.useRef(null);
+    const deleteFormRef = React.useRef(null);
 
     const [formState, action] = useFormState<ErrorMessage, FormData>(createRow, new FormData());
 
@@ -61,10 +62,19 @@ export default function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
 
     }
 
+    const handleDeleteRow = async (event: any) => {
+        const confirmed = window.confirm("Are you sure you want to delete this row?");
+        if (confirmed) {
+            event.preventDefault();
+            const deleteFormData = new FormData(deleteFormRef.current!)
+            await deleteRow(deleteFormData);
+        }
+    }
+
     return (
         <>
 
-            <button className="inline-flex items-center px-4 mt-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-slate-600 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500" onClick={(event) => gridInfo.weeks ? handleCreateWeek(courseID, gridInfo.gridName, event, gridInfo.weeks.length) : handleCreateWeek(courseID, gridInfo.gridName, event)}>
+            <button className="inline-flex items-center mt-4 border border-transparent text-sm shadow-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={(event) => gridInfo.weeks ? handleCreateWeek(courseID, gridInfo.gridName, event, gridInfo.weeks.length) : handleCreateWeek(courseID, gridInfo.gridName, event)}>
                 Add New Week
             </button>
 
@@ -162,7 +172,7 @@ export default function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
                                                                 <div className="w-64 p-4  border border-slate-400 whitespace-pre text-wrap">{row.assessment}</div>
                                                                 <div className="w-64 p-4  border border-slate-400 whitespace-pre text-wrap">{row.notes}</div>
 
-                                                                <form className="flex items-center gap-x-4">
+                                                                <form className="flex items-center gap-x-4" ref={deleteFormRef}>
 
                                                                     <input type="hidden" name="courseID" value={courseID} />
                                                                     <input type="hidden" name="gridName" value={gridInfo.gridName} />
@@ -182,7 +192,7 @@ export default function WeekComp({ gridInfo, courseID, gridID }: WeekProps) {
 
                                                                     <button
                                                                         type="submit"
-                                                                        formAction={deleteRow}
+                                                                        onClick={handleDeleteRow}
                                                                     >
                                                                         <Image width={30} height={30} alt="Red thrash bin to delete week" src='/icons/delete-128.png' />
                                                                     </button>

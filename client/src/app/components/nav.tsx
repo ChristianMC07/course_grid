@@ -9,7 +9,7 @@ export default function Nav() {
 
     return (
         <header>
-            <nav className='flex items-center h-[15vh] justify-between p-6 lg:px-8 border border-t-0 border-l-0 border-r-0 border-b-gray-600' aria-label='Global'>
+            <nav className='flex items-center h-[15vh] justify-between p-6 lg:px-8 border border-t-0 border-l-0 border-r-0 bg-white border-b-gray-600' aria-label='Global'>
                 <div className='flex lg:flex-1'>
 
                     {/* THIS WORKS */}
