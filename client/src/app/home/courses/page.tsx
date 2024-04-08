@@ -9,7 +9,7 @@ export default async function Courses() {
 
   return (
     <>
-      <div className=' bg-gray-100 pt-4 pl-8'>
+      <div className=' bg-gray-100 pt-8 pb-4 pl-10'>
         <div className="flex text-blue-500 hover:text-blue-700">
           <Link href="/home">
             <HomeIcon className="fill-current h-6 w-6" />
@@ -17,7 +17,7 @@ export default async function Courses() {
         </div>
       </div>
       <div className="min-h-screen bg-gray-100">
-        <main className="p-8">
+        <main className="px-10">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-3xl font-bold text-gray-800">Your Courses</h1>
             <Link href="/home/courses/create" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
