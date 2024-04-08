@@ -43,12 +43,14 @@ export async function createCourse(formState: ErrorMessage, formData: FormData) 
 
     if (typeof courseID !== 'string' || courseID.length == 0) {
         errorMessages.courseIDError = 'Please provide a valid Course Code';
+    } else if (!/^[a-zA-Z0-9]+$/.test(courseID)) {
+        errorMessages.courseIDError = 'Course Code can only contain letters, numbers and no spaces allowed';
     } else {
         courseID = sanitize(courseID);
     }
-    'undefined'
+
     if (typeof courseName !== 'string' || courseName.length == 0) {
-        errorMessages.courseNameError = 'Please provide a valid Course Name'; 'undefined'
+        errorMessages.courseNameError = 'Please provide a valid Course Name';
     } else {
         courseName = sanitize(courseName);
     }
