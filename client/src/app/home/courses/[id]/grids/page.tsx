@@ -53,7 +53,7 @@ const GridsPage: React.FC<GridsPageProps> = ({ params }) => {
   };
 
   return (
-    <div className="min-h-[85vh] bg-gray-100 px-10 pt-10">
+    <div className="min-h-[85vh] bg-gray-100 px-10 pt-4">
       <div className=' bg-gray-100 py-4'>
         <div className="flex items-center gap-x-2">
           <Link className='text-blue-700 hover:text-blue-500 pb-1' href="/home">
