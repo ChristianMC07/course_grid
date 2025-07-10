@@ -5,6 +5,7 @@ import { useFormState } from 'react-dom';
 import Link from 'next/link';
 
 import { createCourse } from '@/actions/createCourse';
+import React from 'react';
 
 
 export default function Create() {
@@ -15,12 +16,20 @@ export default function Create() {
 
   const [formState, action] = useFormState<ErrorMessage, FormData>(createCourse, new FormData());
 
+  const formRef = React.useRef(null);
+
+  const handleCreate = async (event: any) => {
+    event.preventDefault();
+    const formData = new FormData(formRef.current!);
+    action(formData);
+  }
+
 
   return (
     <div className="min-h-[85vh] bg-gray-100 p-8">
 
       <div className="max-w-lg mx-auto bg-white p-6 rounded shadow">
-        <form className="space-y-4" action={action} noValidate encType="multipart/form-data">
+        <form className="space-y-4" noValidate encType="multipart/form-data" ref={formRef}>
           <h1 className="text-xl font-bold">Create new course:</h1>
 
           <label htmlFor="courseID" className="block text-gray-700 text-sm font-bold mb-2">
@@ -66,7 +75,7 @@ export default function Create() {
 
 
           <div className="flex items-center justify-between mt-6">
-            <button type="submit" className="bg-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            <button type="submit" onClick={handleCreate} className="bg-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               Create
             </button>
             <Link href="/home/courses" className="font-bold text-sm text-blue-500 hover:text-blue-800">

@@ -265,8 +265,6 @@ export async function editRow(formState: ErrorMessage, formData: FormData) {
 
                 return updatedFormState;
 
-
-
             } else {
                 console.log("No changes were made");
             }
@@ -277,8 +275,6 @@ export async function editRow(formState: ErrorMessage, formData: FormData) {
 
         } finally {
             revalidatePath(`/home/courses/${courseID}/grids/${indexes.gridIndex}/view`, 'page');
-            await mongoClient.close();
-
         }
 
     } else {
@@ -287,7 +283,74 @@ export async function editRow(formState: ErrorMessage, formData: FormData) {
     }
 }
 
-async function findIndexes(userId: string, courseID: string, gridName: string, weekName: string) {
+export async function deleteWeek(courseID: string, gridName: string, weekName: string) {
+    let { userId } = auth();
+
+    const indexes = await findIndexes(userId!, courseID, gridName, weekName);
+
+    const deletePath = `courses.${indexes.courseIndex}.grids.${indexes.gridIndex}.weeks`;
+
+    try {
+        await mongoClient.connect();
+
+        const accountsCollection = mongoClient.db(MONGO_DB_NAME).collection<User>(MONGO_COLLECTION_ACCOUNT);
+
+        //deleting a specific week
+
+        const updatedResult: UpdateResult = await accountsCollection.updateOne(
+            { _id: userId! },
+            { $pull: { [deletePath]: { weekName: weekName } } }
+        )
+
+        updatedResult.modifiedCount === 1 ? console.log('Week successfully deleted') : console.log('Could not delete the week');
+
+
+        revalidatePath(`/home/courses/${courseID}/grids/${indexes.gridIndex}/view`);
+
+    } catch (error) {
+        console.error('Error deleting week: ' + error);
+
+    }
+
+}
+
+export async function createWeek(courseID: string, gridName: string, weekNumber: number = 2) {
+    let { userId } = auth();
+
+    const indexes = await findIndexes(userId!, courseID, gridName);
+
+    const createPath = `courses.${indexes.courseIndex}.grids.${indexes.gridIndex}.weeks`;
+
+    try {
+        await mongoClient.connect();
+
+        const accountsCollection = mongoClient.db(MONGO_DB_NAME).collection<User>(MONGO_COLLECTION_ACCOUNT);
+
+        // Construct the new week with an empty rows array
+        let newWeek: Week = {
+            weekName: `Week ${weekNumber + 1}`,
+            rows: [],
+        }
+
+        // Push the new week to the weeks array of the specified grid
+        const updateResult: UpdateResult = await accountsCollection.updateOne(
+            { _id: userId!, "courses.courseID": courseID, "courses.grids.gridName": gridName },
+            { $push: { [createPath]: newWeek } }
+        );
+
+        updateResult.modifiedCount === 1 ? console.log("The week was added") : console.log('Could not add the week');
+
+    } catch (error) {
+        console.error('Error creating week: ' + error);
+    } finally {
+        mongoClient.close();
+    }
+
+    revalidatePath(`/home/courses/${courseID}/grids/${indexes.gridIndex}/view`);
+}
+
+
+async function findIndexes(userId: string, courseID: string, gridName: string, weekName?: string) {
 
     try {
 

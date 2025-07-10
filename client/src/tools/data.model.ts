@@ -13,7 +13,7 @@ export interface User {
 }
 
 export interface Course {
-    isSubmitting: boolean | undefined;
+    isSubmitting?: boolean | undefined;
     courseID: string;
     courseName: string
     courseDescription: string;
@@ -22,7 +22,10 @@ export interface Course {
 }
 
 export interface Grid {
+    _id?: string;
     gridName: string;
+    archived?: boolean;
+    archivedAt?: string;
     weeks?: Week[];
 }
 

@@ -43,12 +43,14 @@ export async function createCourse(formState: ErrorMessage, formData: FormData) 
 
     if (typeof courseID !== 'string' || courseID.length == 0) {
         errorMessages.courseIDError = 'Please provide a valid Course Code';
+    } else if (!/^[a-zA-Z0-9]+$/.test(courseID)) {
+        errorMessages.courseIDError = 'Course Code can only contain letters, numbers and no spaces allowed';
     } else {
         courseID = sanitize(courseID);
     }
-    'undefined'
+
     if (typeof courseName !== 'string' || courseName.length == 0) {
-        errorMessages.courseNameError = 'Please provide a valid Course Name'; 'undefined'
+        errorMessages.courseNameError = 'Please provide a valid Course Name';
     } else {
         courseName = sanitize(courseName);
     }
@@ -127,19 +129,19 @@ export async function createCourse(formState: ErrorMessage, formData: FormData) 
                     }
                 );
 
-                updateResult.modifiedCount === 1 ? console.log("The course was added") : console.log('No luck');
-            }
+                revalidatePath("/home/courses/");
 
-            revalidatePath(`/home/courses`);
+                updateResult.modifiedCount === 1 ? console.log("Course was created") : console.log('No luck creating your course');
+            }
 
 
 
         } catch (error) {
             console.log('This is the error and will appear in the server : ' + error);
-            revalidatePath(`/home/courses`);
 
         } finally {
-            redirect('/home/courses/');
+            await mongoClient.close();
+            redirect("/home/courses/");
         }
 
     } else {
