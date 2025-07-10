@@ -23,6 +23,8 @@ services:
     image: client-server
     container_name: my-client-server
     command: npm run dev
+    env_file:
+      - .env.local
     volumes:
       # bind mounting entire project folder to container for watcher detection
       - ./client:/usr/app/client
