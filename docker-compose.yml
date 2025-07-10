@@ -31,7 +31,7 @@ services:
       # node_modules gets its own volume for all containers to share
       - node_modules_client:/usr/app/client/node_modules
     ports:
-      - "3000:3000"
+      - "10000:10000"
     depends_on:
       - mongo
     networks:

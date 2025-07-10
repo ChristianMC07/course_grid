@@ -1,6 +1,7 @@
 import { join } from "path";
 import sanitize from "sanitize-html";
-import { promises as fs } from 'fs';
+import { promises as fs } from "fs";
+import supabase from "@/utils/supabase/client";
 
 // randomly generates a number between the range of low and high
 function getRandom(low: number = 1, high: number = 10) {
@@ -30,7 +31,11 @@ function addKey(functionToCall: Function, myKeyCode: string = "Enter") {
 }
 
 // ------------------------------------ challenge solution
-async function getJSONData(retrieveScript: string, success?: Function, failure?: Function) {
+async function getJSONData(
+    retrieveScript: string,
+    success?: Function,
+    failure?: Function
+) {
     if (success !== undefined && failure !== undefined) {
         fetch(retrieveScript)
             .then((response: Response) => response.json())
@@ -49,13 +54,18 @@ async function getJSONData(retrieveScript: string, success?: Function, failure?:
 }
 // -------------------------------------------------------
 
-function sendJSONData(sendURL: string, sendJSON: any, success: Function, failure: Function, debug: boolean = false) {
-    fetch(sendURL,
-        {
-            method: "POST",
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify(sendJSON)
-        })
+function sendJSONData(
+    sendURL: string,
+    sendJSON: any,
+    success: Function,
+    failure: Function,
+    debug: boolean = false
+) {
+    fetch(sendURL, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(sendJSON),
+    })
         .then((response: Response) => response.text())
         .then((responseText: string) => success(responseText))
         .catch((error: Error) => {
@@ -64,31 +74,57 @@ function sendJSONData(sendURL: string, sendJSON: any, success: Function, failure
         });
 }
 
-// ----------------------------------------------------------- 
+// -----------------------------------------------------------
 function capitalizeWords(sentence: string) {
     return sentence
         .split(" ")
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
         .join(" ");
 }
 
 // -----------------------------------------------------------
 
-async function createImage(image: File) {
-    const projectRoot = process.cwd();
-    const imagesDir = join(projectRoot, 'public', 'images');
 
-    let sanitizedCoursePhotoName = sanitize(image.name);
-    // const filePath = join(imagesDir, sanitizedCoursePhotoName + "_" + Date.now());
-    const filePath = join(imagesDir, sanitizedCoursePhotoName);
+async function createImage(image: File): Promise<string | null> {
+    const sanitizedFileName = sanitize(image.name);
+    const timeStampedFileName = `${Date.now()}_${sanitizedFileName}`;
 
-    const bytes = await image.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    if (process.env.NODE_ENV === "development") {
+        //save to public images
 
-    await fs.mkdir(imagesDir, { recursive: true });
+        const projectRoot = process.cwd();
+        const imagesFolder = join(projectRoot, "public", "images");
+        const filePath = join(imagesFolder, timeStampedFileName);
+        const bytes = await image.arrayBuffer();
+        const uint8Array = new Uint8Array(bytes);
+        await fs.mkdir(imagesFolder, { recursive: true });
+        await fs.writeFile(filePath, uint8Array);
+        return timeStampedFileName;
+    } else {
+        const bytes = await image.arrayBuffer();
+        const uint8Array = new Uint8Array(bytes);
 
-    await fs.writeFile(filePath, buffer);
+        const { data, error } = await supabase.storage
+            .from("course-images")
+            .upload(timeStampedFileName, uint8Array, {
+                contentType: image.type,
+                upsert: false,
+            });
 
+        if (error) {
+            console.log("Upload error", error.message);
+            return null;
+        }
+
+        return data?.path ?? null;
+    }
 }
 
-export { getRandom, addKey, getJSONData, sendJSONData, capitalizeWords, createImage };
+export {
+    getRandom,
+    addKey,
+    getJSONData,
+    sendJSONData,
+    capitalizeWords,
+    createImage,
+};
