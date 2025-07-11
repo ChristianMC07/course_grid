@@ -1,7 +1,8 @@
 import { join } from "path";
 import sanitize from "sanitize-html";
 import { promises as fs } from "fs";
-import supabase from "@/utils/supabase/client";
+import { createSupabaseClient } from "@/utils/supabase/client";
+import { auth } from '@clerk/nextjs';
 
 // randomly generates a number between the range of low and high
 function getRandom(low: number = 1, high: number = 10) {
@@ -88,6 +89,8 @@ function capitalizeWords(sentence: string) {
 async function createImage(image: File): Promise<string | null> {
     const sanitizedFileName = sanitize(image.name);
     const timeStampedFileName = `${Date.now()}_${sanitizedFileName}`;
+    const { getToken } = auth();
+    const token = await getToken({ template: "supabase" });
 
     if (process.env.NODE_ENV === "development") {
         //save to public images
@@ -103,6 +106,8 @@ async function createImage(image: File): Promise<string | null> {
     } else {
         const bytes = await image.arrayBuffer();
         const uint8Array = new Uint8Array(bytes);
+
+        const supabase = createSupabaseClient(token);
 
         const { data, error } = await supabase.storage
             .from("course-images")
