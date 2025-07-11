@@ -30,9 +30,7 @@ export default async function Courses() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-8">
             {userInfo?.courses?.map((course, index) => {
-              const isDev = process.env.NODE_ENV === "development";
 
-              // Build the correct image URL
               const imageSrc = isDev
                 ? `/images/${course.coursePhoto}`
                 : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/course-images/${course.coursePhoto}`;

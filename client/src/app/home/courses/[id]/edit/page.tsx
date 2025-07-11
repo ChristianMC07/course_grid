@@ -16,7 +16,7 @@ const EditCoursePage = () => {
 
   useEffect(() => {
     const urlParts = window.location.pathname.split('/');
-    const id = urlParts[urlParts.length - 2]; 
+    const id = urlParts[urlParts.length - 2];
     setCourseId(id);
 
     const loadCourseData = async () => {
@@ -33,7 +33,7 @@ const EditCoursePage = () => {
       loadCourseData();
     }
   }, []);
-  
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -100,7 +100,11 @@ const EditCoursePage = () => {
               Course Photo
             </label>
             <img
-              src={`/images/${courseData.coursePhoto}`}
+              src={
+                process.env.NODE_ENV === 'development'
+                  ? `/images/${courseData.coursePhoto}`
+                  : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/course-images/${courseData.coursePhoto}`
+              }
               alt="Course Photo"
               className="shadow rounded w-full mb-4"
             />
@@ -110,7 +114,7 @@ const EditCoursePage = () => {
               Save Changes
             </button>
             <Link href="/home/courses" className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
-                Cancel
+              Cancel
             </Link>
           </div>
         </form>
