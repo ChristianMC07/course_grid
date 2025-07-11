@@ -26,10 +26,8 @@ services:
     env_file:
       - .env.local
     volumes:
-      # bind mounting entire project folder to container for watcher detection
-      - ./client:/usr/app/client
-      # node_modules gets its own volume for all containers to share
-      - node_modules_client:/usr/app/client/node_modules
+      - ./client:/usr/app/client:cached
+      - /usr/app/client/node_modules
     ports:
       - "10000:10000"
     depends_on:
@@ -38,9 +36,7 @@ services:
       - linkednetwork
 
 volumes:
-  node_modules_client:
   data-volume:
-
 
 networks:
   linkednetwork:
